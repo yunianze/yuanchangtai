@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <title>{%$lngpack.sitename%}</title>
+    <meta name="viewport" content="width=1200, user-scalable=yes">
+    <meta name="keywords" content="{%$lngpack.keyword%}" />
+    <meta name="description" content="{%$lngpack.description%}" />
+    <link rel="shortcut icon" href="{%$rootpath%}images/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="{%$rootpath%}css/common.css">
+    <link rel="stylesheet" type="text/css" href="{%$rootpath%}css/index.css">
+    <link type="text/css" rel="stylesheet" href="{%$rootpath%}css/swiper-3.3.1.min.css">
+    <script type="text/javascript" src="{%$rootdir%}index.php?ac=scriptout&at=waplink"></script>
+</head>
+
+<body>
+    <!-- 导航栏 -->
+    {%link file="cn/public/head.html"%}
+    <!-- 导航栏结束 -->
+    <!-- banner -->
+    <div class="banner">
+        <div class="swiper-container">
+            {%get name=bann class=atid:1,adtype:1%}
+            <div class="swiper-wrapper">
+                {%forlist from=$array key=i%}
+                <div class="swiper-slide">
+                    <img src="{%$rootdir%}{%$array[i].filename%}" alt="">
+                </div>
+                {%/forlist%}
+            </div>
+            {%/get%}
+            <!-- Add Arrows -->
+            <div class="swiper-pagination "></div>
+        </div>
+    </div>
+    <!-- banner end -->
+    <!-- 产品展示 -->
+    <div class="pro middle">
+        <div class="title">
+            <p>产品展示</p>
+            <b>Tea Time Estonian </b>
+        </div>
+        <div class="setPos">
+            <span id="prev" class="btn prev"></span>
+            <span id="next" class="btn next"></span>
+            <div class="mod18">
+                <div id="listBox" class="listBox">
+                    <ul class="cf">
+                        {%get name=list class=mid:3,tid:1%} {%forlist from=$array key=i%}
+                        <li><a title="{%$array[i].title%}" href="{%$array[i].link%}"><i {%if key=>i==1%}class="arr2"{%/if%}></i><img src="{%$array[i].pic|zoom(222,146,'',1)%}" /></a></li>
+                        {%/forlist%} {%/get%}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 新闻资讯 -->
+    <div class="news middle">
+        <div class="title">
+            <p>新闻资讯</p>
+            <b>Tea Time Estonian </b>
+        </div>
+        <ul class="newsList clearfix" id="date_p">
+            {%get name=list class=mid:2,tid:2,max:4%} {%forlist from=$array key=i%}
+            <li class="{%if  key=>i==1%}bigImg{%else%}normals{%/if%}">
+                <a title="{%$array[i].title%}" href="{%$array[i].link%}">
+                            {%if  key=>i==1%}
+                            <img src="{%$array[i].pic|zoom(474,197,'#fff',2)%}" alt="">
+                            <h2>MORE  >></h2>
+                            {%/if%}
+                                <div class="p_date clearfix">
+                                <div class="date">
+                                    <h3></h3>
+                                    <h4></h4>
+                                    <h5 style="display:none;">{%$array[i].addtime|timeformat(2)%}</h5>
+                                    </div>
+                                    <div class="des">
+                                    <h1>{%$array[i].title|cutstr(25,'...')%}</h1>
+                                <p class="summary">{%$array[i].summary|cutstr(50,'...')%}</p>
+                                </div>
+                                </div>
+                            </a>
+            </li>
+            {%/forlist%} {%/get%}
+        </ul>
+    </div>
+    <!-- 关于我们 -->
+    <div class="footerbg">
+    <div class="about middle">
+        <div class="title">
+            <p>关于我们</p>
+            <b>Tea Time Estonian </b>
+        </div>
+        <ul class="xianchang clearfix">
+            {%get name=list class=mid:7,tid:14,max:4%} {%forlist from=$array key=i%}
+            <li class="{%div=>i=4%}clearMR{%/div=>i%} xLi">
+                <a href="javascript:void(0)">
+                    <div><img src="{%$array[i].pic|zoom(222,296,'#fff',2)%}" alt="">
+                        <p><i>{%$array[i].title%}</i></p>
+                    </div>
+                </a>
+            </li>
+            {%/forlist%} {%/get%}
+        </ul>
+            <div class="thumbs"></div>
+        <div class="changtai">
+            {%get name=typeview class=tid:14%} {%$typeread.content|htmlcode(1)%} {%/get%}
+        </div>
+        <div class="jianchi">
+        <img src="{%$rootpath%}images/jianchi.png">
+         <a href="{%find:type class=14 out=link%}">了解详情 </a>
+        </div>
+    </div>
+    <!-- footer -->
+    {%link file="cn/public/footer.html"%}
+    <!-- footer end -->
+    
+    </div>
+</body>
+<script src="{%$rootpath%}js/jquery.min.js"></script>
+<script src="{%$rootpath%}js/swiper-3.3.1.min.js"></script>
+<script src="{%$rootpath%}js/pro.js"></script>
+<script>
+var swiper = new Swiper('.swiper-container', {
+    pagination: '.swiper-pagination',
+    speed: 1000,
+    autoplay: 4000,
+    loop: true,
+    paginationClickable: true,
+    slidesPerView: 'auto',
+    loopedSlides: 1,
+});
+
+/*日期修改*/
+var oDate = document.getElementById('date_p');
+var oLi = oDate.getElementsByTagName('li');
+var mn = null;
+var dn = null;
+for (var i = 0; i < oLi.length; i++) {
+    mn = mouth(oLi.item(i).getElementsByTagName('h5').item(0).innerHTML);
+    dn = year(oLi.item(i).getElementsByTagName('h5').item(0).innerHTML);
+    oLi.item(i).getElementsByTagName('h3').item(0).innerHTML = mn;
+    oLi.item(i).getElementsByTagName('h4').item(0).innerHTML = dn;
+
+}
+// 2012-01-01
+function mouth(datel) {
+    if (datel.substr(5, 2) < 10) {
+        return '0' + datel.substr(6, 1);
+    } else {
+        return datel.substr(5, 2);
+    }
+}
+
+function year(datel) {
+    return datel.substr(0, 7);
+}
+</script>
+
+</html>

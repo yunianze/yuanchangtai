@@ -1,0 +1,12 @@
+{%get name=typelist class=utid:$$type.tid,tid:$type.tid%} 
+{%if count( $array ) > 0 %}
+<div id="secNav">
+    <h1 class="close">{%$uptypeview.typename%}</h1>
+    <ul>
+        {%forlist from=$array key=i%}
+        <li><a {%if $array[i].selected==1 %}class="hover" {%/if%} href="{%$array[i].link%}">{%$array[i].typename%}</a></li>
+        {%/forlist%}
+    </ul>
+</div>
+{%/if%}
+{%/get%}

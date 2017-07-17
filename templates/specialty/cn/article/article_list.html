@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <title>{%$lngpack.sitename%}</title>
+    <meta name="keywords" content="{%$lngpack.keyword%}" />
+    <meta name="description" content="{%$lngpack.description%}" />
+    <link rel="shortcut icon" href="{%$rootpath%}images/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="{%$rootpath%}css/common.css">
+    <link rel="stylesheet" type="text/css" href="{%$rootpath%}css/inside.css">
+    <link rel="stylesheet" href="{%$rootpath%}css/jquery.page.css">
+</head>
+
+<body>
+    <!-- 导航栏 -->
+    {%link file="cn/public/head.html"%}
+    <!-- 导航栏结束 -->
+    <!-- banner -->
+    <div class="inBanner clearfix">
+        {%if $type.typepic!==''%}
+        <img src="{%$rootdir%}{%$type.typepic%}" alt=""> {%/if%}
+    </div>
+    <!-- banner end -->
+    <div class="article_list min-height">
+        <div class="middle clearfix">
+            <!-- 左侧 -->
+            <div class="left">
+                {%get name=typelist class=utid:$type.topid,tid:$type.tid%}
+                <div class="lBg"></div>
+                <ul class="treeview">
+                    {%forlist from=$array key=i%}
+                    <li class="hover">
+                        <a href="javascript:void(0)"  title="{%$array[i].typename%}">{%$array[i].typename%} </a>
+                    </li>
+                    {%/forlist%}
+                </ul>
+                {%/get%}
+            </div>
+            <!-- 左侧结束 -->
+            <div class="rightCon">
+                {%if count($array) > 0%}
+                <ul class="news-list mt110 clearfix" id="date">
+                     <div class="page pageCurr clearfix">
+                    {%forlist from=$array key=i%}
+                    <li>
+                        <a title="{%$array[i].title%}" href="{%$array[i].link%}">
+                            <div class="imgB">
+                                <img src="{%$array[i].pic|zoom(760,252,'#fff',1)%}" alt="">
+                            </div>
+                            <div class="des">
+                                <p>{%$array[i].title%}</p>
+                            </div>
+                            <div class="date">
+                                <h1></h1>
+                                <h2></h2>
+                                <h3>{%$array[i].addtime|timeformat(2,'.')%}</h3>
+                            </div>
+                            <em>{%$array[i].summary|cutstr(90,'...')%}</em>
+                        </a>
+                    </li>
+                    {%div=>i=3%}</div>
+                    <div class="page clearfix">
+                        {%/div=>i%} {%/forlist%}
+                    </div>
+                </ul>
+                 <div class="tcdPageCode">
+                </div>
+                {%else%}
+                <div class="fh_botton">
+                    <div id="pagination">暂无内容</div>
+                </div>
+                {%/if%}
+            </div>
+        </div>
+    </div>
+    <!-- 右侧结束 -->
+    <!-- 中部结束 -->
+    <!-- footer -->
+    {%link file="cn/public/footer.html"%}
+    <!-- footer end-->
+</body>
+<script src="{%$rootpath%}js/jquery.min.js"></script>
+<script src="{%$rootpath%}js/jquery.page.js"></script>
+<script type="text/javascript">
+/*日期修改*/
+var oDate = document.getElementById('date');
+var oLi = oDate.getElementsByTagName('li');
+var mn = null;
+var dn = null;
+for (var i = 0; i < oLi.length; i++) {
+    mn = mouth(oLi.item(i).getElementsByTagName('h3').item(0).innerHTML);
+    dn = day(oLi.item(i).getElementsByTagName('h3').item(0).innerHTML);
+    yn = year(oLi.item(i).getElementsByTagName('h3').item(0).innerHTML);
+    oLi.item(i).getElementsByTagName('h1').item(0).innerHTML = mn;
+    oLi.item(i).getElementsByTagName('h2').item(0).innerHTML = dn;
+    oLi.item(i).getElementsByTagName('h3').item(0).innerHTML = yn;
+
+}
+// 2012-01-01
+function day(datel) {
+  return  datel.substring(8, 10)+'/';
+}
+
+function mouth(datel) {
+    return datel.substring(5, 7)+'/';
+
+}
+
+function year(datel) {
+    return datel.substring(0, 4);
+}
+</script>
+
+</html>

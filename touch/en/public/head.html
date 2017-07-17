@@ -1,0 +1,25 @@
+<div id="head">
+		<img src="{%$rootpath%}images/logo.gif">
+		<div class="lng">
+			{%get name=lng%}
+			{%forlist from=$array key=i%}
+				<a href="{%$array[i].link%}">{%$array[i].lngtitle%}</a>{%if key=>i==1%} / {%/if%}
+			{%/forlist%}
+			{%/get%}
+		</div>
+	</div>
+	<!--public head end-->
+	<!-- navigation start-->
+	<table id="nav" border="0" cellpadding="0" cellspacing="1">
+		<tr>
+			{%get name=menu class=path:$path,current:$current,ishome:1%}
+			{%forlist from=$array key=i%}
+			<td {%if $array[i].path==$path && $array[i].current==$current%}class="hover"{%/if%}><a href="{%$array[i].link%}">{%$array[i].title%}</a></td>
+			{%if key=>i==3%}
+			</tr>
+			<tr>
+			{%/if%}
+			{%/forlist%}
+			{%/get%}
+		</tr>
+	</table>

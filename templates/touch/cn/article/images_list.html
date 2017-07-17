@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <!-- 推广优化组件开始 -->
+    <title>{%$lngpack.sitename%}</title>
+    <meta name="keywords" content="{%$lngpack.keyword%}">
+    <meta name="description" content="{%$lngpack.description%}">
+    <!-- 推广优化组件结束 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="format-detection" content="email=no">
+    <!-- css start -->
+    <link type="text/css" rel="stylesheet" href="{%$rootpath%}style/reset.css">
+    <link type="text/css" rel="stylesheet" href="{%$rootpath%}style/public.css">
+    <link type="text/css" rel="stylesheet" href="{%$rootpath%}style/inside.css">
+    <link type="text/css" rel="stylesheet" href="{%$rootpath%}style/lightGallery.css">
+    <link rel="stylesheet" href="{%$rootpath%}style/fakeLoader.css">
+    <!-- css end -->
+</head>
+
+<body>
+    <div class="wrap">
+        <div id="wrap" style="background: #f1f1f1;">
+            <div id="mask"></div>
+            <!-- head start -->
+            <div id="head">
+                <a class="back" href="javascript:history.go(-1)"></a>
+                <div id="navSwitch">
+                    <span class="s1"></span>
+                    <p></p>
+                    <span class="s3"></span>
+                </div>
+                <h1>{%$type.typename%}</h1>
+            </div>
+            <!-- head end -->
+            <!-- secNav start -->
+            {%link file="cn/public/secNav.html"%}
+            <!-- secNav end -->
+            <div class="content images_list">
+                {%if count($array) > 0%}
+                <ul id="masonry" class="clearfix images" data-pswp-uid="2">
+                    {%forlist from=$array key=i%}
+                    <li class="item" data-src="{%$array[i].pic|zoom(640,'','',4)%}" data-title="{%$array[i].title%}">
+                            <a href="javascript:;">
+                                <img src="{%$array[i].pic|zoom(320,'','',4)%}">
+                            </a>
+                    </li>
+                    {%/forlist%}
+                </ul>
+                <!-- <div id="pagelist">{%$pagetext%}</div>
+                <div id="pagination" class="pagination">
+                    {%$pagevt.t%}{%$pagevt.p%}{%$pagevt.n%}{%$pagevt.e%}
+                </div> -->
+                {%else%}
+                <p class="noContent">资料整理中...</p>
+                {%/if%}
+            </div>
+            <!-- navigation  start-->
+            {%link file="cn/public/nav.html"%}
+            <!-- navigation  end-->
+            <!-- footer start -->
+            {%link file="cn/public/footer.html"%}
+            <!-- footer end -->
+        </div>
+    </div>
+
+    <script src="{%$rootpath%}script/masonry-docs.min.js"></script>
+    <script src="{%$rootpath%}script/masonry.apply.js"></script>
+    <script src="{%$rootpath%}script/lightGallery.min.js"></script>
+    <script src="{%$rootpath%}script/lightGallery.o.js"></script>
+</body>
+</html>

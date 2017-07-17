@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <!-- 推广优化组件开始 -->
+    <title>{%$lngpack.sitename%}</title>
+    <meta name="keywords" content="{%$lngpack.keyword%}">
+    <meta name="description" content="{%$lngpack.description%}">
+    <!-- 推广优化组件结束 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="format-detection" content="email=no">
+    <!-- css start -->
+    <link type="text/css" rel="stylesheet" href="{%$rootpath%}style/reset.css">
+    <link type="text/css" rel="stylesheet" href="{%$rootpath%}style/public.css">
+    <link type="text/css" rel="stylesheet" href="{%$rootpath%}style/index.css">
+    <link rel="stylesheet" href="{%$rootpath%}style/fakeLoader.css">
+    <link type="text/css" rel="stylesheet" href="{%$rootpath%}style/swiper.min.css">
+    <!-- css end -->
+</head>
+
+<body>
+    <div class="wrap">
+        <div id="wrap">
+            <div id="mask"></div>
+            <!-- head start -->
+            {%link file="cn/public/head.html"%}
+            <!-- head end -->
+            <!-- banner start -->
+            <div id="banner">
+                <div class="swiper-container">
+                    {%get name=bann class=atid:1,adtype:1%}
+                    <div class="swiper-wrapper">
+                        {%forlist from=$array key=i%}
+                        <div class="swiper-slide">
+                            <img alt="" src="{%$array[i].filename|zoom(640,360,'',2)%}">
+                        </div>
+                        {%/forlist%}
+                    </div>
+                    {%/get%}
+                    <div class="swiper-pagination"></div>
+                </div>
+            </div>
+            <!-- banner end -->
+            <!-- products start -->
+            <div class="products">
+                <div class="title"><strong>产品中心</strong></div>
+                <ul class="clearfix">
+                    {%get name=list class=mid:3,tid:1,max:6%} {%forlist from=$array key=i%}
+                    <li {%div=>i=2%}class="fr"{%/div=>i%}>
+                        <a href="{%$array[i].typelink%}">
+                            <img src="{%$array[i].pic|zoom(288,250,'#fff',1)%}">
+                            <p>{%$array[i].title%}</p>
+                        </a>
+                        {%/forlist%}
+                    </li>
+                    {%/get%}
+                </ul>
+                <a href="{%find:type class=1 out=link%}" class="more r">查看更多</a>
+            </div>
+            <!-- products end -->
+            <!-- about start -->
+            <div class="about">
+                <div class="title"><strong>关于我们</strong></div>
+                <div class="box">
+                    {%get name=typeview class=tid:14%}
+{%$typeread.content|htmlcode(1)%}
+{%/get%}
+                   
+                    <a href="{%find:type class=14 out=link%}" class="more r">查看更多</a>
+                </div>
+            </div>
+            <!-- about end -->
+            <!-- news start -->
+            <div class="news">
+                <div class="title"><strong>新闻中心</strong></div>
+                <ul>
+                    {%get name=list class=mid:2,tid:2,max:5%} {%forlist from=$array key=i%}
+                    <li>
+                        <a href="{%$array[i].link%}">
+                            <h6 class="te">{%$array[i].title%}</h6>
+                            <p>{%$array[i].summary|cutstr(60,'...')%}</p>
+                            <span>发布时间：{%$array[i].addtime|timeformat(2,'-')%}</span>
+                        </a>
+                    </li>
+                    {%/forlist%} {%/get%}
+                </ul>
+                <a href="{%find:type class=2 out=link%}" class="more">查看更多</a>
+            </div>
+            <!-- news end -->
+            <!-- navigation  start-->
+            {%link file="cn/public/nav.html"%}
+            <!-- navigation  end-->
+            <!-- footer start -->
+            {%link file="cn/public/footer.html"%}
+            <!-- footer end -->
+        </div>
+    </div>
+    <script src="{%$rootpath%}script/swiper.jquery.min.js"></script>
+    <script>
+    var swiper = new Swiper('.swiper-container', {
+        pagination: '.swiper-pagination',
+        paginationClickable: true,
+        spaceBetween: 30,
+        centeredSlides: true,
+        autoplay: 4000,
+        autoplayDisableOnInteraction: false
+    });
+    </script>
+</body>
+
+</html>

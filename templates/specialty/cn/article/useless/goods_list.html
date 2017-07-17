@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <title>{%$lngpack.sitename%}</title>
+    <meta name="keywords" content="{%$lngpack.keyword%}" />
+    <meta name="description" content="{%$lngpack.description%}" />
+    <link rel="shortcut icon" href="{%$rootpath%}images/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="{%$rootpath%}css/common.css">
+    <link rel="stylesheet" type="text/css" href="{%$rootpath%}css/inside.css">
+</head>
+
+<body>
+    <!-- 导航栏 -->
+    {%link file="cn/public/head.html"%}
+    <!-- 导航栏结束 -->
+    <!-- banner -->
+    <div class="innerbanner clearfix">
+        {%if $type.typepic!==''%}
+        <img src="{%$rootdir%}{%$type.typepic%}" alt=""> {%/if%}
+    </div>
+    <!-- banner end -->
+    <!-- 中部 -->
+    <div class="location clearfix">
+        <div class="middle clearfix">
+            <div class="type">
+                <strong>{%$type.typename%}</strong> {%$type.content|htmlcode(1)%}
+            </div>
+            <!-- 位置 -->
+            {%list name=path class=type:type,id:$type.tid%}
+            <!-- 位置结束 -->
+        </div>
+    </div>
+    <!-- 右侧 -->
+    <div class="goods_list min-height">
+        <div class="middle clearfix">
+            <!-- 左侧 -->
+            {%link file="cn/public/left.html"%}
+            <!-- 左侧结束 -->
+            <div class="right-content" style="padding-top:10px;">
+                {%if count($array) > 0%}
+                <ul class="pro clearfix">
+                    {%forlist from=$array key=i%}
+                    <li {%div=>i=3%}class='clearMR'{%/div=>i%}>
+                        <a href="javascript:void(0)" title="{%$array[i].title%}">
+                            <div class="zoom"><img src="{%$array[i].pic|zoom(301,300,'#fff',1)%}" alt="{%$array[i].title%}">
+                            </div>
+                            <p>{%$array[i].title%}</p>
+                        </a>
+                    </li>
+                    {%/forlist%}
+                    <div class="mod18">
+                        <span id="prevTop" class="btn prev"></span>
+                        <span id="nextTop" class="btn next"></span>
+                        <div id="picBox" class="picBox">
+                            <ul class="cf">
+                                {%forlist from=$array key=i%}
+                                <li>
+                                    <a href="javascript:void(0)" title="{%$array[i].title%}"><img src="{%$array[i].pic|zoom(418,534,'#fff',1)%}" />
+                                        <div class="des">
+                                            {%$array[i].detail|htmlcode(1)%}
+                                        </div>
+                                    </a>
+                                <strong>{%$array[i].title%}</strong> {%/forlist%}
+                                </li>
+                            </ul>
+                            <span class="close">&nbsp;</span>
+                        </div>
+                    </div>
+                </ul>
+                <div class="fh_botton">
+                    <div id="pagination" class="pagination">
+                        {%$pagebotton%}
+                    </div>
+                </div>
+                {%else%}
+                <div class="fh_botton">
+                    <div id="pagination">暂无内容</div>
+                </div>
+                {%/if%}
+            </div>
+        </div>
+    </div>
+    <!-- 右侧结束 -->
+    <!-- 中部结束 -->
+    <!-- footer -->
+    {%link file="cn/public/footer.html"%}
+    <!-- footer end-->
+</body>
+<script type="text/javascript">
+(function() {
+    function prochange(){
+
+    function G(s) {
+        return document.getElementById(s);
+    }
+
+    function getStyle(obj, attr) {
+        if (obj.currentStyle) {
+            return obj.currentStyle[attr];
+        } else {
+            return getComputedStyle(obj, false)[attr];
+        }
+    }
+
+    function Animate(obj, json) {
+        if (obj.timer) {
+            clearInterval(obj.timer);
+        }
+        obj.timer = setInterval(function() {
+            for (var attr in json) {
+                var iCur = parseInt(getStyle(obj, attr));
+                iCur = iCur ? iCur : 0;
+                var iSpeed = (json[attr] - iCur) / 5;
+                iSpeed = iSpeed > 0 ? Math.ceil(iSpeed) : Math.floor(iSpeed);
+                obj.style[attr] = iCur + iSpeed + 'px';
+                if (iCur == json[attr]) {
+                    clearInterval(obj.timer);
+                }
+            }
+        }, 30);
+    }
+
+    var oPic = G("picBox");
+    var oPrevTop = G("prevTop");
+    var oNextTop = G("nextTop");
+
+    var oPicLi = oPic.getElementsByTagName("li");
+    var len1 = oPicLi.length;
+
+    var oPicUl = oPic.getElementsByTagName("ul")[0];
+    var w1 = oPicLi[0].offsetWidth;
+
+    oPicUl.style.width = w1 * len1 + "px";
+
+    var index = 0;
+
+    function Change() {
+        Animate(oPicUl, {
+            left: -index * w1
+        });
+        if (index < len1) {
+            Animate(oPicUl, {
+                left: -(index) * w1
+            });
+        } else if (index = len1) {
+            Animate(oPicUl, {
+                left: 0
+            });
+        } else {
+            Animate(oPicUl, {
+                left: -(index - 1) * w1
+            });
+        }
+    }
+
+    oNextTop.onclick = function() {
+        index++;
+        console.log(index)
+        index = index == len1 ? 0 : index;
+        Change();
+    }
+
+    oPrevTop.onclick = function() {
+        index--;
+        index = index == -len1 ? 0 : Math.abs(index);
+        Change();
+    }
+}
+   // 弹出框
+   $('.pro li').each(function(){
+   $(this).click(function(){
+        $(".mod18").fadeIn();
+        prochange();
+     })
+   });
+    $(".close").click(
+        function(){
+            $(".mod18").hide()
+        }
+        );
+
+})()
+</script>
+
+</html>

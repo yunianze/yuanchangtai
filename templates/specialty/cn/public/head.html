@@ -1,0 +1,14 @@
+<div class="navLogo middle clearfix">
+    <!-- logo -->
+    <a href="{%$homelink%}"  title="点击进入首页"    class="logo"></a>
+    <!-- 导航栏 -->
+    <ul class="nav clearfix">
+        {%get name=menu class=path:$path,current:$current,ishome:0%} {%forlist from=$array key=i%}
+        <li class="top-li ">
+            <a href="{%$array[i].link%}"  class="{%if $array[i].path==$path && $array[i].current==$current%}hover{%/if%}">
+               {%$array[i].title%}
+            </a>
+        </li>
+        {%/forlist%} {%/get%}
+    </ul>
+</div>

@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>{%$lngpack.sitename%}</title>
+<meta name="keywords" content="{%$lngpack.keyword%}">
+<meta name="description" content="{%$lngpack.description%}">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+<meta name="format-detection" content="email=no">
+
+<link type="text/css" rel="stylesheet" href="{%$rootpath%}style/resetEn.css">
+<link type="text/css" rel="stylesheet" href="{%$rootpath%}style/style.css">
+<link type="text/css" rel="stylesheet" href="{%$rootpath%}style/swiper.min.css">
+<script src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+</head>
+
+<body>
+<div id="wrap">
+	<!--public head start-->
+	{%link file="en/public/head.html"%}
+	<!-- navigation start-->
+	<!-- banner start -->
+	<div class="bannerIn">
+		<img src="{%$rootpath%}images/banner/about.jpg">
+	</div>
+	<!-- banner end -->
+	<!--second navigation start-->
+	<div class="secNav clearfix">
+		{%get name=typelist class=utid:$type.topid,tid:$type.tid%}
+		{%forlist from=$array key=i%}
+		<li {%div=>i=3%}class="extra"{%/div=>i%}>
+			<a href="{%$array[i].link%}" {%if $array[i].selected==1 %}class="hover"{%/if%}>{%$array[i].typename%}</a>
+		</li>
+    	{%/forlist%}
+		{%/get%}
+	</div>
+	<!--second navigation end-->
+	<!--content start-->
+	<div class="aboutIn">
+		{%$read.content%}
+	</div>
+	<!--content end-->
+	<!--public footer start-->
+	{%link file="en/public/footer.html"%}
+	<!--public footer end-->
+</div>
+</body>
+</html>

@@ -1,0 +1,114 @@
+
+.slider-pro {
+    font-family: 'Open Sans', Arial;
+    position: relative;
+}
+/* Example 5 */
+#example5 .sp-thumbnail-image-container {
+	width: 100%;
+	height:100%;
+	overflow: hidden;
+	float: left;
+}
+
+#example5 .sp-thumbnail-image {
+	height: 100%;
+}
+
+#example5 .sp-thumbnail-text {
+	max-width: 170px;
+    float: right;
+    height:80px;
+	padding:15px;
+	text-align:left;
+    background-color: #F0F0F0;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+#example5 .sp-thumbnail-title {
+	margin-bottom: 5px;
+	text-transform: uppercase;
+	color: #333;
+}
+
+#example5 .sp-thumbnail-description {
+	font-size: 14px;
+	color: #333;
+}
+
+@media (max-width: 500px) {
+	#example5 .sp-thumbnail {
+		text-align: center;
+	}
+
+	#example5 .sp-thumbnail-image-container {
+		display: none;
+	}
+
+	#example5 .sp-thumbnail-text {
+		width: 120px;
+	}
+
+	#example5 .sp-thumbnail-title {
+		font-size: 12px;
+		text-transform: uppercase;
+	}
+
+	#example5 .sp-thumbnail-description {
+		display: none;
+	}
+}
+/*大图*/
+.sp-slides-container{
+	background-color: #fff;
+	position: static;
+}
+/*文本*/
+// .sp-caption-container{
+// 	position: relative;
+// 	background-color: #fff;
+// 	text-align: left;
+// }
+.sp-caption-container{
+	width:294px;
+	height: 58px;
+	padding: 0;
+	background: rgba(255,255,255,0.46);
+}
+.sp-caption-container>strong{
+  font-size: 23px;
+  line-height: 58px;
+  color: #282627;
+  display: block;
+  text-indent: 2em;
+}
+
+.sp-thumbnail{
+	cursor: pointer;
+}
+/* 箭头 */
+.sp-arrows{
+	position: absolute;
+	top:0;
+	left:0;
+	width:100%;
+	height: 100%;
+	opacity: 1;
+	filter: alpha(opacity=100);
+}
+.sp-arrows .sp-arrow{
+	color:#333;
+	font-size:22px;
+	text-shadow:none;
+	left:92%;
+}
+.sp-vertical .sp-arrow{
+	margin-left: 0;
+}
+.sp-vertical .sp-previous-arrow{
+	top: -40px;
+}
+.sp-vertical .sp-next-arrow{
+	bottom: -40px;
+}

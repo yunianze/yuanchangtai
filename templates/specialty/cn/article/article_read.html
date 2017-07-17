@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <title>{%$lngpack.sitename%}</title>
+    <meta name="keywords" content="{%$lngpack.keyword%}" />
+    <meta name="description" content="{%$lngpack.description%}" />
+    <link rel="shortcut icon" href="{%$rootpath%}images/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="{%$rootpath%}css/common.css">
+    <link rel="stylesheet" type="text/css" href="{%$rootpath%}css/inside.css">
+</head>
+
+<body>
+    <!-- 导航栏 -->
+    {%link file="cn/public/head.html"%}
+    <!-- 导航栏结束 -->
+    <!-- banner -->
+    <div class="inBanner clearfix">
+        {%if $type.typepic!==''%}
+        <img src="{%$rootdir%}{%$type.typepic%}" alt=""> {%/if%}
+    </div>
+    <!-- banner end -->
+    <div class="article_read min-height">
+        <div class="middle clearfix">
+            <!-- 左侧 -->
+            <div class="left">
+                {%get name=typelist class=utid:$type.topid,tid:$type.tid%}
+                <div class="lBg"></div>
+                <ul class="treeview">
+                    {%forlist from=$array key=i%}
+                    <li class="hover">
+                        <a href="javascript:void(0)"  title="{%$array[i].typename%}">{%$array[i].typename%} </a>
+                    </li>
+                    {%/forlist%}
+                </ul>
+                {%/get%}
+            </div>
+            <!-- 左侧结束 -->
+            <div class="rightCon">
+                <div class="nTitle">
+                    <strong>{%$read.title%}</strong>
+                    <span style="padding-right:30px;">更新时间：{%$read.addtime|timeformat(2,'.')%}</span>
+                    <span>浏览次数：{%$read.click%}次</span>
+                </div>
+                <div class="content">
+                    {%$read.content%}
+                </div>
+                <div class="fh_book">
+                    <ul class="fh_newslist_read unstyled">
+                        {%get name=plist class=did:$read.did%}
+                        <li>{%if $read.ctitle!=''%}上一篇：<a class="infolist2" title="{%$read.title%}" href="{%$read.link%}">{%$read.ctitle%}</a>{%/if%}</li>
+                        {%/get%} {%get name=plist class=did:$read.did,class:1%}
+                        <li>{%if $read.ctitle!=''%}下一篇：<a class="infolist2" title="{%$read.title%}" href="{%$read.link%}">{%$read.ctitle%}</a>{%/if%}</li>
+                        {%/get%}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 右侧结束 -->
+    <!-- footer -->
+    {%link file="cn/public/footer.html"%}
+    <!-- footer end-->
+</body>
+
+</html>

@@ -1,0 +1,45 @@
+<div id="nav">
+    <div class="mask"></div>
+    <!-- search start -->
+    {%get name=search class=mid:0%}
+    <form class="search" name="infosearch" method="post" action="{%$link%}">
+        <input type="hidden" name="lng" value="{%$lng%}">
+        <input type="hidden" name="mid" value="0">
+        <input type="text" id="keyword" name="keyword" placeholder="请输入关键词" onfocus="searchOnFocus(this)" onblur="searchOnBlur(this)">
+        <input type="submit" name="botton" value="">
+    </form>
+    {%/get%}
+    <!-- search end -->
+    <a href="{%$homelink%}" class="home">首页</a>
+    <ul id="mainNav">
+        {%get name=typelist%}
+        {%forlist from=$array key=i%}
+        <li>
+            <a href="{%$array[i].link%}" class="te">
+                {%$array[i].typename%}
+            </a> 
+            {% if count( $array[i].childArray ) > 0 %}
+            <span></span>
+            <ul>
+                {%forlist from=$array[i].childArray key=ii%}
+                <li>
+                    <a href="{%$array[i].childArray[ii].link%}" class="te">{%$array[i].childArray[ii].typename%}</a>
+                    {%if count( $array[i].childArray[ii].childArray ) > 0 %}
+                    <span></span>
+                    <ul>
+                        {%forlist from=$array[i].childArray[ii].childArray key=iii%}
+                        <li>
+                            <a href="{%$array[i].childArray[ii].childArray[iii].link%}">{%$array[i].childArray[ii].childArray[iii].typename%}</a>
+                        </li>
+                        {%/forlist%}
+                    </ul>
+                    {%/if%}
+                </li>
+                {%/forlist%}
+            </ul>
+            {%/if%}
+        </li>
+        {%/forlist%}
+        {%/get%}
+    </ul>
+</div>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>{%$lngpack.sitename%}</title>
+<meta name="keywords" content="{%$lngpack.keyword%}" />
+<meta name="description" content="{%$lngpack.description%}" />
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no" />
+<link rel="stylesheet" type="text/css" href="{%$rootpath%}css/jquery.mobile.flatui.css" />
+<link rel="stylesheet" type="text/css" href="{%$rootpath%}css/custom.css" />
+<link rel="stylesheet" type="text/css" href="{%$rootpath%}css/espcms.css" />
+<link rel="stylesheet" type="text/css" href="{%$rootpath%}css/espcms_wap_public.css" />
+<script type="text/javascript" src="{%$rootdir%}js/wap/jquery-1.11.0.min.js"></script>
+<script src="{%$rootdir%}js/wap/TouchSlide.1.1.js"></script>
+<script type="text/javascript" src="{%$rootdir%}js/basicrun.js"></script>
+<script type="text/javascript">
+	$(document).bind("mobileinit", function() {
+		$.mobile.ajaxEnabled = false;
+	});
+</script>
+<script type="text/javascript" src="{%$rootdir%}js/wap/jquery.mobile-1.4.2.min.js"></script>
+<script id="panel-init">
+	$(function() {
+		$("body>[data-role='panel']").panel();
+	});
+	$(document).bind("mobileinit", function() {
+		if (navigator.userAgent.indexOf("Android") != -1) {
+			$.mobile.defaultPageTransition = 'none';
+			$.mobile.defaultDialogTransition = 'none';
+		}
+	});
+	document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+		WeixinJSBridge.call('hideToolbar');
+	});
+
+	function pageajaxlist() {
+		var limit = $('#limit').val();
+		var nowpage = $('#nowpage').val();
+		var maxpage = $('#maxpage').val();
+		var limitstard = parseInt(nowpage) * limit;
+		nowpage = parseInt(nowpage) + 1;
+		$('#nowpage').val(nowpage);
+		if (nowpage == maxpage){
+			$("#pagebbslistbotton").hide();
+		}
+		if (nowpage <= maxpage) {
+			$.ajax({
+				type: "GET",
+				url: "{%find:mlink class=1 out=bbslitajax%}&btid={%$type.btid%}",
+				data: "limitstard=" + limitstard + "&nowpage=" + nowpage + "&limit=" + limit,
+				success: function(data) {
+					$("#bbslistload").append(data);
+				}
+			});
+		}
+	}
+</script>
+</head>
+<body>
+<div data-role="page" data-theme="a">
+	<div data-role="header" data-theme="b">
+		<h1>{%$type.typename%}</h1>
+		<a href="#nav-panel" data-icon="flat-menu" data-theme="b" data-inline="true">菜单</a>
+	</div>
+	<article class="content">
+		<ul class="text_area">
+			<li class="list_divider">{%$type.typename%}</li>
+			<li class="list_info">
+				<a href="#popupLogin" data-rel="popup" data-role="button" data-position-to="window" data-theme="d" data-transition="pop">我要留言</a>
+				{%if $out=='forumbbs'%}
+				<!--每页显示数量-->
+				<input type="hidden" name="limit" id="limit" value="{%$limit%}"/>
+				<!--数据总数量-->
+				<input type="hidden" name="countnum" id="countnum" value="{%$countnum%}"/>
+				<!--总翻页数量-->
+				<input type="hidden" name="maxpage" id="maxpage" value="{%$maxpage%}"/>
+				<!--当前翻页数-->
+				<input type="hidden" name="nowpage" id="nowpage" value="1"/>
+
+				<ul class="espcms_bbs_list_all" id="bbslistload">
+					{%if count($array) > 0%}
+					{%forlist from=$array key=i%}
+					<li>
+						<div class="espcms_bbs_content_a_read_table">
+							<div class="espcms_index">
+								<span class="espcms_bbs_title">主题：{%$array[i].title%}</span>   <span class="espcms_bbs_auto">{%$array[i].username%}</span>    <span class="espcms_bbs_time">留言时间：{%$array[i].addtime|timeformat(3)%}</span>
+							</div>
+							<b class="b1"></b><b class="b2"></b><b class="b3"></b><b class="b4"></b>
+							<div class="content">
+								{%$array[i].content|htmlcode('0')%}
+
+								{%if count( $array[i].list )>0 %}
+								{%forlist from=$array[i].list key=ii%}
+								<div class="espcms_bbs_content_b_read_table">
+									<div class="espcms_index_re"><span class="espcms_bbs_title">管理员回复</span>   <span class="espcms_bbs_time">留言时间：{%$array[i].list[ii].addtime|timeformat(3)%}</span></div>
+									<b class="b1"></b><b class="b2"></b><b class="b3"></b><b class="b4"></b>
+									<div class="content">{%$array[i].list[ii].content|htmlcode('0')%}</div>
+									<b class="b5"></b><b class="b6"></b><b class="b7"></b><b class="b8"></b>
+								</div>
+								{%/forlist%}
+								{%/if%}
+							</div>
+							<b class="b5"></b><b class="b6"></b><b class="b7"></b><b class="b8"></b>
+						</div>
+					</li>
+					{%/forlist%}
+					{%else%}
+					<li>暂无留言</li>
+					{%/if%}
+				</ul>
+				{%if $maxpage>1%}
+					<a id="pagebbslistbotton" data-theme="c" data-role="button" href="javascript:pageajaxlist();">查看更多留言</a>
+				{%/if%}
+				{%/if%}
+			</li>
+		</ul>
+		{%if $member.userid!=0 || $type.purview==0%}
+			<script type="text/javascript">
+			var forum_title_err = "{%$lngpack.forum_title_err%}";
+			var forum_input_err = "{%$lngpack.forum_input_err%}";
+			var email_err = "{%$lngpack.email_err%}";
+			var seccode_empty = "{%$lngpack.seescodeerr%}";
+			</script>
+			<div data-role="popup" id="popupLogin" data-theme="b" class="ui-corner-all">
+				<form name="bbsmainform" method="post" action="{%$mlink.forumsave%}" onSubmit="return forumcreat('0')">
+					<input type="hidden" name="userid" value="{%$member.userid%}"/>
+					<input type="hidden" name="inputclass" value="add"/>
+					<input type="hidden" name="btid" value="{%$type.btid%}"/>
+					<input type="hidden" name="lng" value="{%$lng%}"/>
+					<input type="hidden" name="tokenkey" value="{%$tokenkey.token_key%}"/>
+					<div style="padding:10px 20px;" data-theme="c">
+						<h3>留言添加</h3>
+						<label for="ti" class="ui-hidden-accessible">主题：</label>
+						<input type="text" name="title" id="title" value="" placeholder="主题" data-theme="c">
+
+						<label for="un" class="ui-hidden-accessible">姓名：</label>
+						<input type="text" name="username" id="username" value="" placeholder="姓名" data-theme="c">
+
+						<label for="em" class="ui-hidden-accessible">E-mail：</label>
+						<input type="text" name="email" id="email" value="" placeholder="E-mail" data-theme="c">
+
+						<label for="co" class="ui-hidden-accessible">内容：</label>
+						<textarea cols="50" rows="15" name="content" id="content" placeholder="内容" data-theme="c"></textarea>
+
+						<button type="submit" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">提交留言</button>
+					</div>
+				</form>
+			</div>
+		{%/if%}
+
+		{%link file="cn/public/footer_str.html"%}
+	</article>
+	{%link file="cn/public/footer_page.html"%}
+
+</div>
+</body>
+</html>

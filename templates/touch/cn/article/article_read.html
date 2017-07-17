@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <!-- 推广优化组件开始 -->
+    <title>{%$lngpack.sitename%}</title>
+    <meta name="keywords" content="{%$lngpack.keyword%}">
+    <meta name="description" content="{%$lngpack.description%}">
+    <!-- 推广优化组件结束 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="format-detection" content="email=no">
+    <!-- css start -->
+    <link type="text/css" rel="stylesheet" href="{%$rootpath%}style/reset.css">
+    <link type="text/css" rel="stylesheet" href="{%$rootpath%}style/public.css">
+    <link type="text/css" rel="stylesheet" href="{%$rootpath%}style/inside.css">
+    <link rel="stylesheet" href="{%$rootpath%}style/fakeLoader.css">
+    <!-- css end -->
+</head>
+
+<body>
+    <div class="wrap">
+        <div id="wrap">
+            <div id="mask"></div>
+            <!-- head start -->
+            <div id="head">
+                <a class="back" href="javascript:history.go(-1)"></a>
+                <div id="navSwitch">
+                    <span class="s1"></span>
+                    <p></p>
+                    <span class="s3"></span>
+                </div>
+                <h1>{%$type.typename%}</h1>
+            </div>
+            <!-- head end -->
+            <!-- secNav start -->
+            {%link file="cn/public/secNav.html"%}
+            <!-- secNav end -->
+            <div class="content article_read">
+                <div class="t">
+                    <h5>{%$read.title%}</h5>
+                    <h6>发布时间：{%$read.addtime|timeformat(3)%}</h6>
+                </div>
+                <div class="c">
+                    {%$read.content%}
+                </div>
+                <div id="pageSwitch">
+                    {%get name=plist class=did:$read.did%}
+                    {%if $read.ctitle!=''%}
+                    <a href="{%$read.link%}" class="fl">
+                        <h5 class="te">上一篇</h5>
+                        <h6 class="te">{%$read.title%}</h6>
+                    </a>
+                    {%else%}
+                    <div class="none fl">
+                        <h5>没有了</h5>
+                    </div>
+                    {%/if%}
+                    {%/get%}
+                    {%get name=plist class=did:$read.did,class:1%}
+                    {%if $read.ctitle!=''%}
+                    <a href="{%$read.link%}" class="fr">
+                        <h5 class="te">下一篇</h5>
+                        <h6 class="te">{%$read.title%}</h6>
+                    </a>
+                    {%else%}
+                    <div class="none">
+                        <h5>没有了</h5>
+                    </div>
+                    {%/if%}
+                    {%/get%}
+                </div>
+            </div>
+            <!-- navigation  start-->
+            {%link file="cn/public/nav.html"%}
+            <!-- navigation  end-->
+            <!-- footer start -->
+            {%link file="cn/public/footer.html"%}
+            <!-- footer end -->
+        </div>
+    </div>
+</body>
+</html>

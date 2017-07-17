@@ -1,0 +1,25 @@
+{%forlist from=$array key=i%}
+<li>
+	<div class="espcms_bbs_content_a_read_table">
+		<div class="espcms_index">
+			<span class="espcms_bbs_title">主题：{%$array[i].title%}</span>   <span class="espcms_bbs_auto">{%$array[i].username%}</span>    <span class="espcms_bbs_time">留言时间：{%$array[i].addtime|timeformat(3)%}</span>
+		</div>
+		<b class="b1"></b><b class="b2"></b><b class="b3"></b><b class="b4"></b>
+		<div class="content">
+			{%$array[i].content|htmlcode('0')%}
+
+			{%if count( $array[i].list )>0 %}
+			{%forlist from=$array[i].list key=ii%}
+			<div class="espcms_bbs_content_b_read_table">
+				<div class="espcms_index_re"><span class="espcms_bbs_title">管理员回复</span>   <span class="espcms_bbs_time">留言时间：{%$array[i].list[ii].addtime|timeformat(3)%}</span></div>
+				<b class="b1"></b><b class="b2"></b><b class="b3"></b><b class="b4"></b>
+				<div class="content">{%$array[i].list[ii].content|htmlcode('0')%}</div>
+				<b class="b5"></b><b class="b6"></b><b class="b7"></b><b class="b8"></b>
+			</div>
+			{%/forlist%}
+			{%/if%}
+		</div>
+		<b class="b5"></b><b class="b6"></b><b class="b7"></b><b class="b8"></b>
+	</div>
+</li>
+{%/forlist%}

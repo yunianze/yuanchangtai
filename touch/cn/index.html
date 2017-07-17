@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>{%$lngpack.sitename%}</title>
+    <meta name="keywords" content="{%$lngpack.keyword%}" />
+    <meta name="description" content="{%$lngpack.description%}" />
+    <link rel="shortcut icon" href="{%$rootpath%}images/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="{%$rootpath%}css/swiper-3.3.1.min.css">
+    <link rel="stylesheet" href="{%$rootpath%}css/lytebox.css" type="text/css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="{%$rootpath%}css/common.css">
+    <link rel="stylesheet" type="text/css" href="{%$rootpath%}css/style.css">
+</head>
+
+<body>
+    {%link file="cn/public/head.html"%}
+    <!-- banner  -->
+    <div class="banner clearfix">
+        {%get name=bann class=atid:1,adtype:1,max:2%}
+        <div class="swiper-container" id="swiper" style=" height:549px;position:relative;width:1920px;
+    left:50%;margin-left:-960px;">
+            <div class="swiper-wrapper">
+                {%forlist from=$array key=i%}
+                <div class="swiper-slide"><img src="{%$rootdir%}{%$array[i].filename%}" alt=""> </div>
+                {%/forlist%}
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+        {%/get%}
+    </div>
+    <!-- banner end -->
+     <!-- 中部 -->
+    <div class="middle3 clearfix">
+        <div class="total clearfix">
+        {%get name=typeview class=tid:32%}
+            <a  href="{%$typeread.link%}" class="p_d">{%$typeread.typename%}</a>
+            <div class="d_b"></div>
+            {%/get%}
+        </div>
+        <ul class="u_3 clearfix">
+            {%get name=list class=mid:12,tid:32,max:3%} 
+               {%forlist from=$array key=i%}
+            <li {%if key=>i==3%}class="clearR" {%/if%}>
+                <div class="thumbnail" style="position:relative;">
+                        <a href="{%$array[i].pic%}" rel="lyteshow[vacation]" title="{%$array[i].title%}">
+                            <img src="{%$array[i].pic%}" alt="Plants: image 1 0f 4 thumb" style="display:block;"> </a>
+                            <div class="P_t clearfix">
+                        <p id="mdw">{%$array[i].title%}</p>
+                        </div>
+                    </div>
+            </li>
+            {%/forlist%} 
+        {%/get%}
+        </ul>
+    </div>
+    <div class="gg clearfix">
+        <div class="middle3 clearfix">
+            <div class="total clearfix">
+            {%get name=typeview class=tid:33%}
+            <a  href="{%$typeread.link%}" class="p_d">{%$typeread.typename%}</a>
+            <div class="d_b"></div>
+            {%/get%}
+            </div>
+            <ul class="honour clearfix">
+                {%get name=list class=mid:11,tid:33,max:4,rank:2%} 
+                {%forlist from=$array key=i%}
+                <li {%if key=>i==4%}class="clearR"{%/if%}>
+                    <div class="thumbnail">
+                        <a href="{%$array[i].pic%}" rel="lytebox[plants]" title="{%$array[i].title%}"><img src="{%$array[i].pic%}" alt="Plants: image 1 0f 4 thumb" /></a>
+                    </div>
+                </li>
+                {%/forlist%} {%/get%}
+            </ul>
+        </div>
+    </div>
+        <div class="middle3 clearfix" style="width:1200px;">
+        <div class="total clearfix">
+            <p class="p_d">产品世界</p>
+            <div class="d_b"></div>
+        </div>
+        <div class="world clearfix">
+          <ul class="songfour clearfix">
+            <li class="gsc clearfix">
+                <p class="world_c">松下·过山车</p>
+                <div class="hot">HOT</div>
+                <img src="{%$rootpath%}images/zhuozi.png" alt="" style="margin:164px auto 125px auto;display:block;">
+                <div class="dhover clearfix">
+                    <a href="{%find:type class=36 out=link%}" class="gsc_hover clearfix">
+                        <p class="hover_p">松下系列</p>
+                        <p class="hover_a">查看详情</p>
+                    </a>
+                </div>
+            </li>
+          
+                <li class="lili" style="border-left:2px solid #e8e8e8;border-right:2px solid #e8e8e8;">
+                    <a class="sl clearfix" href="{%find:type class=2 out=link%}">
+                        <p class="rightWorld_c">松崎·龙卷风</p>
+                        <div class="rightHot">HOT</div>
+                        <img src="{%$rootpath%}images/zhuozi2.png" alt="" id="img_r">
+                    </a>
+                     <div class="dhover clearfix">
+                    <a href="{%find:type class=2 out=link%}" class="ugsc_hover clearfix">
+                        <p class="uhover_p">松崎系列</p>
+                        <p class="uhover_a">查看详情</p>
+                    </a>
+                </div>
+                </li>
+                <li class="clearR lili">
+                    <a class="sl clearfix" href="{%find:type class=3 out=link%}">
+                        <p class="rightWorld_c">松豪·雅致</p>
+                        <div class="rightHot">HOT</div>
+                        <img src="{%$rootpath%}images/zhuozi3.png" alt="" id="img_r">
+                    </a>
+                    <div class="dhover clearfix">
+                    <a href="{%find:type class=3 out=link%}" class="ugsc_hover clearfix">
+                        <p class="uhover_p">松豪系列</p>
+                        <p class="uhover_a">查看详情</p>
+                    </a>
+                </div>
+                </li>
+                <li class="clearB lili">
+                    <a class="sl clearfix" href="{%find:type class=5 out=link%}">
+                        <p class="rightWorld_c">配件系列</p>
+                        <div class="rightHot">HOT</div>
+                        <img src="{%$rootpath%}images/zhuozi4.png" alt="" id="img_r">
+                    </a>
+                     <div class="dhover clearfix">
+                    <a href="{%find:type class=5 out=link%}" class="ugsc_hover clearfix">
+                        <p class="uhover_p">配件系列</p>
+                        <p class="uhover_a">查看详情</p>
+                    </a>
+                </div>
+                </li>
+                <li class="clearR clearB lili" style="border-left:2px solid #e8e8e8;border-right:2px solid #e8e8e8;">
+                    <a class="sl clearfix" href="{%find:type class=4 out=link%}">
+                        <p class="rightWorld_c">苹果系列</p>
+                        <div class="rightHot">HOT</div>
+                        <img src="{%$rootpath%}images/zhuozi5.png" alt="" id="img_r">
+                    </a>
+                      <div class="dhover clearfix">
+                    <a href="{%find:type class=4 out=link%}" class="ugsc_hover clearfix">
+                        <p class="uhover_p">苹果系列</p>
+                        <p class="uhover_a">查看详情</p>
+                    </a>
+                </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+ <div class="bi clearfix">
+        <div class="middle3 clearfix" style="width:1200px;">
+            <div class="total clearfix" style="margin-top:0;padding-top:46px;">
+                <{%get name=typeview class=tid:37%}
+            <a  href="{%$typeread.link%}" class="p_d" style="color:#ffffff;">{%$typeread.typename%}</a>
+            <div class="d_b"></div>
+            {%/get%}
+            </div>
+            <ul class="f_r clearfix">
+              <li>
+              {%get name=bread class=tid:20%}
+                    <a href="{%$read.link%}"><img src="{%$read.pic%}" alt="" class="round_c">
+                        <p>{%$read.title%}</p>
+                    </a>
+                {%/get%}
+                </li>
+                <li>
+                    {%get name=bread class=tid:21%}
+                    <a href="{%$read.link%}"><img src="{%$read.pic%}" alt="" class="round_c">
+                        <p>{%$read.title%}</p>
+                    </a>
+                {%/get%}
+                </li>
+                <li>
+                {%get name=bread class=tid:22%}
+                    <a href="{%$read.link%}"><img src="{%$read.pic%}" alt="" class="round_c">
+                        <p>{%$read.title%}</p>
+                    </a>
+                {%/get%}
+                </li>
+                <li class="clearR">
+                  {%get name=bread class=tid:23%}
+                    <a href="{%$read.link%}"><img src="{%$read.pic%}" alt="" class="round_c">
+                        <p>{%$read.title%}</p>
+                    </a>
+                {%/get%}
+                </li>
+            </ul>
+        </div>
+    </div>
+   <div class="video middle3 clearfix" style="width:1200px;margin-top:80px;">
+        <object class id="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=7,0,19,0" width="472" height="292" style="border:4px solid #838589;margin-left:10px;float:left;">
+            <param name="movie" value="{%$rootpath%}video/flvplayer.swf">
+            <param name="quality" value="high">
+            <param name="allowFullScreen" value="true">
+            <param name="FlashVars" value="vcastr_file=when you believe.mp4&BufferTime=3&IsAutoPlay=1">
+            <embed src="video/flvplayer.swf" allowfullscreen="true" flashvars="vcastr_file=video/大鱼.flv&LogoText=www.lanrentuku.com&IsAutoPlay=1" quality="high" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" width="426" height="287"></embed>
+        </object>
+        <div class="video_right clearfix">
+        {%get name=bread class=tid:26%}
+            <a href="{%$read.link%}" class="Ptitle">{%$read.longtitle%}</a>
+            <a href="{%$read.link%}" class="P_p">{%$read.summary%}</a>
+            {%/get%}
+        </div>
+    </div>
+       <div class="news_pic clearfix">
+        <div class="video middle3 clearfix" style="width:1200px;">
+            <div class="total clearfix" style="margin-top:0;padding-top:36px;margin-bottom:33px;">
+                {%get name=typeview class=tid:9%}
+            <a  href="{%$typeread.link%}" class="p_d">{%$typeread.typename%}</a>
+            <div class="d_b"></div>
+            {%/get%}
+            </div>
+             {%get name=list class=mid:2,tid:10,dlid:1,max:1%}
+                {%forlist from=$array key=i%}
+            <a href="{%$array[i].link%}" class="news_pic_left" style="background: url({%$array[i].pic%})no-repeat center;">
+                <p>{%$array[i].title%}</p>
+            </a>
+            {%/forlist%}
+                  {%/get%}
+            <ul class="news_pic_right">
+            {%get name=list class=mid:2,tid:10,dlid:2,max:3%}
+                {%forlist from=$array key=i%}
+                <li>
+                    <a href="{%$array[i].link%}"><img src="{%$array[i].pic%}" alt="">
+                        <div class="P_pp">
+                            <h2>{%$array[i].title%}</h2>
+                            <p>{%$array[i].summary%}</p>
+                        </div>
+                    </a>
+                </li>
+                 {%/forlist%}
+                  {%/get%}
+            </ul>
+        </div>
+    </div>
+    <!-- 中部结束 -->
+    {%link file="cn/public/footer.html"%}
+</body>
+<script src="{%$rootpath%}js/jquery.min.js"></script>
+<script src="{%$rootpath%}js/common.js"></script>
+<script src="{%$rootpath%}js/swiper-3.3.1.min.js"></script>
+<script src="{%$rootpath%}js/lytebox.js"></script>
+<script type="text/javascript" src="{%$rootdir%}index.php?ac=scriptout&at=waplink"></script>
+<script>
+var mySwiper = new Swiper('.swiper-container', {
+    pagination: '.swiper-pagination',
+    autoplay: 5000,
+    loop: true,
+    paginationClickable: true,
+})
+var secondSwiper = new Swiper('#secondswiper.swiper-container', {
+    loop: true,
+    autoplay: 5000,
+    speed: 300,
+
+    // 如果需要前进后退按钮
+    nextButton: '.swiper-button-next',
+    prevButton: '.swiper-button-prev',
+
+
+})
+</script>
+
+</html>

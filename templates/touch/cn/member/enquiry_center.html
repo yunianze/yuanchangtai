@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>{%$lngpack.sitename%}</title>
+<meta name="keywords" content="{%$lngpack.keyword%}" />
+<meta name="description" content="{%$lngpack.description%}" />
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no" />
+<link rel="stylesheet" type="text/css" href="{%$rootpath%}css/jquery.mobile.flatui.css" />
+<link rel="stylesheet" type="text/css" href="{%$rootpath%}css/custom.css" />
+<link rel="stylesheet" type="text/css" href="{%$rootpath%}css/espcms.css" />
+<link rel="stylesheet" type="text/css" href="{%$rootpath%}css/espcms_wap_public.css" />
+<script type="text/javascript" src="{%$rootdir%}js/wap/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="{%$rootdir%}js/basicrun.js"></script>
+<script src="{%$rootdir%}js/wap/TouchSlide.1.1.js"></script>
+<script type="text/javascript">
+	$(document).bind("mobileinit", function() {
+		$.mobile.ajaxEnabled = false;
+	});
+</script>
+<script type="text/javascript" src="{%$rootdir%}js/wap/jquery.mobile-1.4.2.min.js"></script>
+<script id="panel-init">
+	$(function() {
+		$("body>[data-role='panel']").panel();
+	});
+	$(document).bind("mobileinit", function() {
+		if (navigator.userAgent.indexOf("Android") != -1) {
+			$.mobile.defaultPageTransition = 'none';
+			$.mobile.defaultDialogTransition = 'none';
+		}
+	});
+	document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+		WeixinJSBridge.call('hideToolbar');
+	});
+</script>
+</head>
+<body>
+<div data-role="page" data-theme="a">
+	<div data-role="header" data-theme="b">
+		<h1>{%$lngpack.sitename%}</h1>
+		<a href="#nav-panel" data-icon="flat-menu" data-theme="b" data-inline="true">菜单</a>
+	</div>
+	<article class="content">
+		{%if $out=='list'%}
+			<script type="text/javascript">
+			var order_amout_err = "{%$lngpack.order_amout_err%}";
+			var address_title = "{%$lngpack.address_title%}";
+			var alias_empty = "{%$lngpack.alias_empty%}";
+			var email_err = "{%$lngpack.email_err%}";
+			var tel_empty = "{%$lngpack.tel_empty%}";
+			</script>
+			{% if count($array) > 0 %}
+			<form name="mainform" method="post" action="{%$mlink.enquirysave%}" onsubmit="return enquirysave()">
+			<input type="hidden" name="userid" value="{%$member.userid%}"/>
+			<input type="hidden" name="tokenkey" value="{%$tokenkey.token_key%}"/>
+				<ul data-role="listview" data-inset="true" data-theme="x" style="padding-top:10px;">
+					{%forlist from=$array key=i%}
+					<li>
+						<h2>{%$array[i].title%}</h2>
+						<p>
+							编号：{%$array[i].tsn%} <span style="padding-left:10px;"></span>
+							<input type="hidden" name="ptitle[]" value="{%$array[i].title%}"/>
+							<input type="hidden" name="tsn[]" value="{%$array[i].tsn%}"/>
+							<input type="hidden" name="did[]" value="{%$array[i].did%}"/>
+						</p>
+						<p>
+							<input type="range" name="amount[]" id="amount{%$array[i].did%}" value="{%$array[i].amount%}" min="0" max="100" data-mini="true" data-highlight="true" data-theme="b" data-track-theme="b">
+						</p>
+					</li>
+					{%/forlist%}
+				</ul>
+				<a href="javascript:if (confirm('您确定要清空所询价的商品吗？')) location.href='{%$mlink.cleargoods%}';" data-role="button" data-theme="d">清空询价表</a>
+
+
+				<ul data-role="listview" data-inset="true" data-theme="b" style="margin-top:10px;">
+					<li data-role="list-divider" data-theme="b">填写联系方式</li>
+					<li>
+
+						<label for="ti" class="ui-hidden-accessible">联系人姓名：</label>
+						<input type="text" name="linkman" value="{%$member.alias%}" id="linkman" placeholder="联系人姓名" data-theme="c">
+
+						<fieldset data-role="controlgroup" data-theme="c">
+							<input type="radio" name="sex" id="radio-choice-v-2a" value="1"{%if $member.sex==1%} checked="checked"{%/if%}>
+							<label for="radio-choice-v-2a">男</label>
+							<input type="radio" name="sex" id="radio-choice-v-2b" value="0"{%if $member.sex==0%} checked="checked"{%/if%}>
+							<label for="radio-choice-v-2b">女</label>
+						</fieldset>
+
+						<label for="un" class="ui-hidden-accessible">性别：</label>
+						<input type="text" name="email" value="{%$member.email%}"  id="email" placeholder="电子邮件" data-theme="c">
+
+						<label for="em" class="ui-hidden-accessible">联系电话：</label>
+						<input type="text" name="tel" value="{%$member.tel%}" placeholder="联系电话" data-theme="c">
+
+						<label for="em" class="ui-hidden-accessible">手机：</label>
+						<input type="text" name="mobile" value="{%$member.mobile%}" placeholder="手机" data-theme="c">
+
+						<label for="em" class="ui-hidden-accessible">传真：</label>
+						<input type="text" name="fax" value="{%$member.fax%}" placeholder="传真" data-theme="c">
+
+						<label for="em" class="ui-hidden-accessible">详细地址：</label>
+						<input type="text" name="address" value="{%$member.address%}" placeholder="详细地址" data-theme="c">
+
+						<label for="em" class="ui-hidden-accessible">邮编：</label>
+						<input type="text" name="zipcode" value="{%$member.zipcode%}" placeholder="邮编" data-theme="c">
+
+						<label for="co" class="ui-hidden-accessible">备注</label>
+						<textarea cols="50" rows="15" name="content" id="content" placeholder="备注" data-theme="c"></textarea>
+
+						<button type="submit" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">确认提交询价</button>
+					</li>
+				</ul>
+			</form>
+			{%else%}
+				<ul class="text_area">
+					<li class="list_divider">系统提示</li>
+					<li class="list_info tc">您还没有选择询价商品</li>
+				</ul>
+
+			{%/if%}
+		{%/if%}
+
+
+		{%link file="cn/public/footer_str.html"%}
+	</article>
+	{%link file="cn/public/footer_page.html"%}
+</div>
+</body>
+</html>

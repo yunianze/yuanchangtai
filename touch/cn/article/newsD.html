@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>{%$lngpack.sitename%}</title>
+<meta name="keywords" content="{%$lngpack.keyword%}">
+<meta name="description" content="{%$lngpack.description%}">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+<meta name="format-detection" content="email=no">
+
+<link type="text/css" rel="stylesheet" href="{%$rootpath%}style/reset.css">
+<link type="text/css" rel="stylesheet" href="{%$rootpath%}style/style.css">
+<link type="text/css" rel="stylesheet" href="{%$rootpath%}style/swiper.min.css">
+<script src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+</head>
+
+<body>
+<div id="wrap">
+	<!--public head start-->
+	{%link file="cn/public/head.html"%}
+	<!-- navigation start-->
+	<!-- banner start -->
+	<div class="bannerIn">
+		<img src="{%$rootpath%}images/banner/news.jpg">
+	</div>
+	<!-- banner end -->
+	<!--second navigation start-->
+	<div class="secNav clearfix">
+		{%get name=typelist class=utid:$type.topid,tid:$type.tid%}
+		{%forlist from=$array key=i%}
+		<li {%div=>i=3%}class="extra"{%/div=>i%}>
+			<a href="{%$array[i].link%}" {%if $array[i].selected==1 %}class="hover"{%/if%}>{%$array[i].typename%}</a>
+		</li>
+    	{%/forlist%}
+		{%/get%}
+	</div>
+	<!--second navigation end-->
+	<!--content start-->
+	<div class="newsD">
+		<h1>{%$read.title%}</h1>
+    	<h2>发布时间：{%$read.addtime|timeformat(3)%}</h2>
+		{%$read.content%}
+		<div class="switch clearfix">
+			{%get name=plist class=did:$read.did%}
+			{%if $read.ctitle!=''%}<a href="{%$read.link%}" class="pre">上一条：{%$read.title%}</a>{%/if%}
+			{%/get%}
+			{%get name=plist class=did:$read.did,class:1%}
+			{%if $read.ctitle!=''%}<a href="{%$read.link%}" class="next">下一条：{%$read.title%}</a>{%/if%}
+      		{%/get%}
+    	</div>
+	</div>
+	<!--content end-->
+	<!--public footer start-->
+	{%link file="cn/public/footer.html"%}
+	<!--public footer end-->
+</div>
+<script src="{%$rootpath%}script/swiper.jquery.min.js"></script>
+<script>
+	var swiper = new Swiper('.swiper-container', {
+		pagination: '.swiper-pagination',
+		paginationClickable: true,
+		spaceBetween: 30,
+		centeredSlides: true,
+		autoplay: 4000,
+		autoplayDisableOnInteraction: false
+	});
+</script>
+</body>
+</html>

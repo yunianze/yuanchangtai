@@ -1,0 +1,6 @@
+{%forlist from=$array key=i%}
+                    <li {%div=>i=2%}class="fr"{%/div=>i%}><a href="{%$array[i].link%}">
+                        <img src="{%$array[i].pic|zoom(400,350,'#fff',1)%}">
+                        <p class="te">{%$array[i].title%}</p>
+                    </a></li>
+                    {%/forlist%}

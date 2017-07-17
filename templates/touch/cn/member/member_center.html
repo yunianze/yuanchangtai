@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>{%$lngpack.sitename%}</title>
+<meta name="keywords" content="{%$lngpack.keyword%}" />
+<meta name="description" content="{%$lngpack.description%}" />
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no" />
+<link rel="stylesheet" type="text/css" href="{%$rootpath%}css/jquery.mobile.flatui.css" />
+<link rel="stylesheet" type="text/css" href="{%$rootpath%}css/custom.css" />
+<link rel="stylesheet" type="text/css" href="{%$rootpath%}css/espcms.css" />
+<link rel="stylesheet" type="text/css" href="{%$rootpath%}css/espcms_wap_public.css" />
+<script type="text/javascript" src="{%$rootdir%}js/wap/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="{%$rootdir%}js/basicrun.js"></script>
+<script src="{%$rootdir%}js/wap/TouchSlide.1.1.js"></script>
+<script type="text/javascript">
+	$(document).bind("mobileinit", function() {
+		$.mobile.ajaxEnabled = false;
+	});
+</script>
+<script type="text/javascript" src="{%$rootdir%}js/wap/jquery.mobile-1.4.2.min.js"></script>
+<script id="panel-init">
+	$(function() {
+		$("body>[data-role='panel']").panel();
+	});
+	$(document).bind("mobileinit", function() {
+		if (navigator.userAgent.indexOf("Android") != -1) {
+			$.mobile.defaultPageTransition = 'none';
+			$.mobile.defaultDialogTransition = 'none';
+		}
+	});
+	document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+		WeixinJSBridge.call('hideToolbar');
+	});
+</script>
+<script type="text/javascript">
+	var loing_input_err = "{%$lngpack.loing_input_err%}";
+	var seccode_empty = "{%$lngpack.seescodeerr%}";
+</script>
+</head>
+<body>
+<div data-role="page" data-theme="a">
+	<div data-role="header" data-theme="b">
+		<h1>{%$lngpack.sitename%}</h1>
+		<a href="#nav-panel" data-icon="flat-menu" data-theme="b" data-inline="true">菜单</a>
+		<a href="#nav-menu" data-icon="flat-settings" data-theme="b" data-inline="true">子菜单</a>
+	</div>
+	<article class="content">
+		{%if $out=='center'%}
+		<ul class="text_area">
+			<li class="list_divider">欢迎您成功登陆</li>
+			<li class="list_info">
+				{%$member.username%}欢迎您登陆会员中心
+
+				<a data-theme="c" data-role="button" href="{%$mlink.orderlist%}" data-icon="flat-checkround">我的订单</a>
+				<a data-theme="c" data-role="button" href="{%$mlink.enquirylist%}" data-icon="flat-calendar">我的询盘</a>
+				{%if $bbsapp==1%}
+				<a data-theme="c" data-role="button" href="{%$mlink.forumlist%}" data-icon="flat-bubble">我的留言</a>
+				{%/if%}
+				<a data-theme="c" data-role="button" href="{%$mlink.memedit_info%}" data-icon="flat-new">修改个人资料</a>
+				<a data-theme="c" data-role="button" href="{%$mlink.memedit_password%}" data-icon="flat-lock">密码修改</a>
+				<a data-theme="c" data-role="button" href="{%$mlink.memedit_email%}" data-icon="flat-mail">E-mail修改</a>
+				<a data-theme="d" data-role="button" href="{%$mlink.quit%}" data-icon="flat-cross">退出</a>
+
+			</li>
+		</ul>
+		{%elseif $out=='editinfo'%}
+			<script type="text/javascript">
+			var birthday_empty = "{%$lngpack.birthday_empty%}";
+			var qq_empty = "{%$lngpack.qq_empty%}";
+
+			function editinfo(){
+				if(document.editmember.birthday.value!=""){
+					if(document.editmember.birthday.value.match(/^[1-9][0-9]{3}\-[0-9]{2}\-[0-9]{2}$/ig)==null) {
+						document.editmember.birthday.focus();
+						alert(birthday_empty);
+						return false;
+					}
+				}
+				if(document.editmember.qq.value!=""){
+					if(document.editmember.qq.value.match(/^[0-9]+$/ig)==null) {
+						document.editmember.qq.focus();
+						alert(qq_empty);
+						return false;
+					}
+				}
+				{%forlist from=$modelatt key=i%}
+					{%if $modelatt[i].isvalidate==1%}
+						{%if $modelatt[i].validatetext!=''%}
+							if(document.editmember.{%$modelatt[i].attrname%}.value.match({%$modelatt[i].validatetext%}ig)==null) {
+						{%else%}
+							if(document.editmember.{%$modelatt[i].attrname%}.value==''){
+						{%/if%}
+						document.editmember.{%$modelatt[i].attrname%}.focus();
+						alert('{%$modelatt[i].typename%}输入错误，请返回重新输入');
+						return false;
+					}
+					{%/if%}
+				{%/forlist%}
+			}
+			</script>
+			<form name="editmember" id="editmember" method="post" action="{%$mlink.membersave%}" onsubmit="return editinfo()">
+			<input type="hidden" name="tokenkey" value="{%$tokenkey.token_key%}"/>
+			<input type="hidden" name="upurl" value="{%$upurl%}"/>
+			<input type="hidden" name="inputclass" value="editinfo"/>
+			<input type="hidden" name="userid" value="{%$member.userid%}"/>
+			<input type="hidden" name="username" value="{%$member.username%}"/>
+			<input type="hidden" name="email" value="{%$member.email%}"/>
+			<input type="hidden" name="mvid" value="{%$member.mvid%}"/>
+			<input type="hidden" name="country" value="{%$member.country%}"/>
+			<input type="hidden" name="province" value="{%$member.province%}"/>
+			<input type="hidden" name="city" value="{%$member.city%}"/>
+			<input type="hidden" name="district" value="{%$member.district%}"/>
+			<ul class="text_area">
+				<li class="list_divider">修改个人资料</li>
+				<li class="list_info">
+					<label for="ti" class="ui-hidden-accessible">联系人姓名：</label>
+					<input type="text" name="alias" value="{%$member.alias%}" id="alias" placeholder="联系人姓名" data-theme="c">
+
+					<fieldset data-role="controlgroup" data-theme="c">
+						<input type="radio" name="sex" id="radio-choice-v-2a" value="1"{%if $member.sex==1%} checked="checked"{%/if%}>
+						<label for="radio-choice-v-2a">男</label>
+						<input type="radio" name="sex" id="radio-choice-v-2b" value="0"{%if $member.sex==0%} checked="checked"{%/if%}>
+						<label for="radio-choice-v-2b">女</label>
+					</fieldset>
+
+					<label for="date" class="ui-hidden-accessible">生日：</label>
+					<input type="date" name="birthday" value="{%$member.birthday|timeformat(2)%}"  id="birthday" placeholder="生日" data-theme="c">
+
+					<label for="tel" class="ui-hidden-accessible">联系电话：</label>
+					<input type="text" name="tel" value="{%$member.tel%}" placeholder="联系电话" data-theme="c">
+
+					<label for="msn" class="ui-hidden-accessible">MSM：</label>
+					<input type="text" name="msn" value="{%$member.msn%}" placeholder="MSM" data-theme="c">
+
+					<label for="qq" class="ui-hidden-accessible">QQ：</label>
+					<input type="text" name="qq" value="{%$member.qq%}" placeholder="QQ" data-theme="c">
+
+					<label for="em" class="ui-hidden-accessible">详细地址：</label>
+					<input type="text" name="address" value="{%$member.address%}" placeholder="详细地址" data-theme="c">
+
+					<label for="em" class="ui-hidden-accessible">邮编：</label>
+					<input type="text" name="zipcode" value="{%$member.zipcode%}" placeholder="邮编" data-theme="c">
+
+					{%if count($modelatt) > 0%}
+						{%forlist from=$modelatt key=list%}
+						<label for="{%$modelatt[list].attrname%}" class="ui-hidden-accessible">{%$modelatt[list].typename%}：</label>
+							{%if $modelatt[list].inputtype=='string' || $modelatt[list].inputtype=='int' || $modelatt[list].inputtype=='float' || $modelatt[list].inputtype=='decimal'%}
+							<input type="text" name="{%$modelatt[list].attrname%}" value="{%$modelatt[list].attrvalue%}" placeholder="{%$modelatt[list].typename%}" data-theme="c">
+							{%elseif ($modelatt[list].inputtype=='text' || $modelatt[list].inputtype=='editor')%}
+							<textarea cols="50" rows="15" name="{%$modelatt[list].attrname%}" id="{%$modelatt[list].attrname%}"  placeholder="{%$modelatt[list].typename%}" data-theme="c">{%$modelatt[list].attrvalue%}</textarea>
+							{%elseif ($modelatt[list].inputtype=='htmltext')%}
+							<textarea cols="50" rows="15" name="{%$modelatt[list].attrname%}" id="{%$modelatt[list].attrname%}"  placeholder="{%$modelatt[list].typename%}" data-theme="c">{%$modelatt[list].attrvalue|Html2Text('0')%}</textarea>
+							{%elseif ($modelatt[list].inputtype=='selectinput')%}
+							<input type="text" name="{%$modelatt[list].attrname%}" size="{%$modelatt[list].attrsize%}" id="{%$modelatt[list].attrname%}" value="{%$modelatt[list].attrvalue%}" maxlength="{%$modelatt[list].attrlenther%}" class="infoInput"/>
+							<select size="1" name="{%$modelatt[list].attrname%}selectinputvalue" onchange="javascript:$('#{%$modelatt[list].attrname%}').val(this.value)">
+								<option value="">{%$ST.botton_select_name%}{%$modelatt[list].typename%}</option>
+								{%forlist from=$modelatt[list].selectinputvalue key=ii%}
+								<option value="{%$modelatt[list].selectinputvalue[ii].name%}">{%$modelatt[list].selectinputvalue[ii].name%}</option>
+								{%/forlist%}
+							</select>
+							{%elseif ($modelatt[list].inputtype=='datetime')%}
+							<input type="date" name="{%$modelatt[list].attrname%}" value="{%$modelatt[list].attrvalue|timeformat(3)%}"  id="{%$modelatt[list].attrname%}" placeholder="{%$modelatt[list].typename%}" data-theme="c">
+							{%elseif ($modelatt[list].inputtype=='select')%}
+							<select size="1" name="{%$modelatt[list].attrname%}" id="{%$modelatt[list].attrname%}">
+								<option value="">{%$ST.botton_select_name%}{%$modelatt[list].typename%}</option>
+								{%forlist from=$modelatt[list].attrvalue key=ii%}
+								<option {%$modelatt[list].attrvalue[ii].selected%} value="{%$modelatt[list].attrvalue[ii].name%}">{%$modelatt[list].attrvalue[ii].name%}</option>
+								{%/forlist%}
+							</select>
+							{%elseif ($modelatt[list].inputtype=='radio')%}
+								<fieldset data-role="controlgroup" data-theme="c">
+									{%forlist from=$modelatt[list].attrvalue key=ii%}
+									<input type="radio" value="{%$modelatt[list].attrvalue[ii].name%}" name="{%$modelatt[list].attrname%}" {%if $modelatt[list].attrvalue[ii].selected=='selected'%}checked="checked"{%/if%}>
+									<label for="radio-{%$modelatt[list].attrvalue[ii].name%}-{%key=>ii}">{%$modelatt[list].attrvalue[ii].name%}</label>
+									{%/forlist%}
+								</fieldset>
+							{%elseif ($modelatt[list].inputtype=='checkbox')%}
+								<fieldset data-role="controlgroup" data-theme="c">
+									{%forlist from=$modelatt[list].attrvalue key=ii%}
+									<input type="checkbox" value="{%$modelatt[list].attrvalue[ii].name%}" name="{%$modelatt[list].attrname%}" {%if $modelatt[list].attrvalue[ii].selected=='selected'%}checked="checked"{%/if%}>
+									       <label for="radio-{%$modelatt[list].attrvalue[ii].name%}-{%key=>ii}">{%$modelatt[list].attrvalue[ii].name%}</label>
+									{%/forlist%}
+								</fieldset>
+							{%/if%}
+						{%/forlist%}
+					{%/if%}
+					<button type="submit" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">确认修改资料</button>
+
+				</li>
+			</ul>
+			</form>
+		{%elseif $out=='editpassword'%}
+			<!--密码修改-->
+			<script type="text/javascript">
+				var oldpassword_err = "{%$lngpack.oldpassword_err%}";
+				var password_len = "{%$lngpack.password_err%}";
+				var password_len2 = "{%$lngpack.password_len2%}";
+				var password2_empty = "{%$lngpack.password2_err%}";
+				var password_disaffinity = "{%$lngpack.password_equal%}";
+			</script>
+			<form name="editmember" id="editmember" method="post" action="{%$mlink.membersave%}" onsubmit="return editpassword()">
+			<input type="hidden" name="tokenkey" value="{%$tokenkey.token_key%}"/>
+			<input type="hidden" name="upurl" value="{%$upurl%}"/>
+			<input type="hidden" name="inputclass" value="editpassword"/>
+			<input type="hidden" name="userid" value="{%$member.userid%}"/>
+			<input type="hidden" name="username" value="{%$member.username%}"/>
+			<input type="hidden" name="email" value="{%$member.email%}"/>
+			<ul class="text_area">
+				<li class="list_divider">密码修改</li>
+				<li class="list_info">
+					<label for="oldpassword" class="ui-hidden-accessible">原始密码</label>
+					<input type="password" name="oldpassword" id="oldpassword" value="" placeholder="原始密码" vautocomplete="off">
+
+					<label for="password" class="ui-hidden-accessible">新密码</label>
+					<input type="password" name="password" id="password" value="" placeholder="新密码" vautocomplete="off">
+
+					<label for="password2" class="ui-hidden-accessible">重复新密码</label>
+					<input type="password" name="password2" id="password2" value="" placeholder="重复新密码" vautocomplete="off">
+
+					<button type="submit" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">确认修改密码</button>
+				</li>
+			</ul>
+			</form>
+		{%elseif $out=='editemail'%}
+			<script type="text/javascript">
+				var password_len = "{%$lngpack.password_err%}";
+				var email_err = "{%$lngpack.email_err%}";
+			</script>
+			<form name="editmember" id="editmember" method="post" action="{%$mlink.membersave%}" onsubmit="return editmail()">
+				<input type="hidden" name="tokenkey" value="{%$tokenkey.token_key%}"/>
+				<input type="hidden" name="upurl" value="{%$upurl%}"/>
+				<input type="hidden" name="inputclass" value="editmail"/>
+				<input type="hidden" name="userid" value="{%$member.userid%}"/>
+				<input type="hidden" name="username" value="{%$member.username%}"/>
+				<ul class="text_area">
+					<li class="list_divider">E-mail修改</li>
+					<li class="list_info">
+						<label for="password" class="ui-hidden-accessible">密码</label>
+						<input type="password" name="password" id="password" value="" placeholder="密码" vautocomplete="off">
+
+						<label for="email" class="ui-hidden-accessible">新电子邮箱</label>
+						<input type="text" name="email" id="email" placeholder="新电子邮箱" data-theme="c"  onblur="checktypename('email',this.value,'{%$mlink.checkusername%}','mailmsg','{%$lngpack.mem_regemail_ok%}','{%$lngpack.mem_regemail_no%}','editmailsubmit');" >
+						<span id="mailmsg" class="form_message">请真实填写您的邮件，用于密码找回和相关通知服务</span>
+
+						<button type="submit" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">确认修改E-mail</button>
+					</li>
+				</ul>
+			</form>
+		{%elseif $out=='moblieedit'%}
+			<script type="text/javascript">
+				var moblie_validate = "{%$lngpack.moblie_validate%}";
+			</script>
+			<form name="editmoblie" id="editmoblie" method="post" action="{%$mlink.moblie_validatecode%}" onsubmit="return moblievalidate(1)">
+			<input type="hidden" name="tokenkey" value="{%$tokenkey.token_key%}"/>
+			<input type="hidden" name="userid" value="{%$member.userid%}"/>
+			<input type="hidden" name="username" value="{%$member.username%}"/>
+			<input type="hidden" name="inputclass" value="add"/>
+				<ul class="text_area">
+					<li class="list_divider">手机号码绑定</li>
+					<li class="list_info">
+						<label for="email" class="ui-hidden-accessible">请输入手机号</label>
+						<input type="text"  name="mobile" id="mobile" value="{%$member.mobile%}" placeholder="请输入手机号" data-theme="c">
+						<span id="mailmsg" class="form_message">您还未绑定手机，绑定手机是完全免费的，我人会对您的手机信息严格保密！</span>
+
+						<button type="submit" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">下一步</button>
+					</li>
+				</ul>
+			</form>
+		{%elseif $out=='moblievalidatecode'%}
+			<script type="text/javascript">
+				var seccode_empty = "{%$lngpack.seescodeerr%}";
+				var password_err = "{%$lngpack.password_err%}";
+			</script>
+			<script type="text/javascript" src="{%$rootdir%}js/mobliecode.js"></script>
+			<form name="editmoblie" id="editmoblie" method="post" action="{%$mlink.moblie_validatesave%}" onsubmit="return moblievalidate(2)">
+			<input type="hidden" name="tokenkey" value="{%$tokenkey.token_key%}"/>
+			<input type="hidden" name="userid" value="{%$member.userid%}"/>
+			<input type="hidden" name="username" value="{%$member.username%}"/>
+			<input type="hidden" name="mobile" value="{%$member.moblie%}"/>
+			<input type="hidden" name="inputclass" value="1"/>
+				<ul class="text_area">
+					<li class="list_divider">手机号码绑定</li>
+					<li class="list_info">
+						<label for="password" class="ui-hidden-accessible">密码</label>
+						<input type="password" name="password" id="password" value="" placeholder="密码" vautocomplete="off">
+
+						<label for="email" class="ui-hidden-accessible">验证码</label>
+						<input type="text" name="mobliesn" id="mobliesn"  placeholder="验证码" data-theme="c">
+
+						<input name="getmobliecodebotton" id="getmobliecodebotton" class="button rosy" type="button" value="点击获取" onclick="getmobliecode('{%$member.moblie%}','{%$member.userid%}','{%$member.username%}','{%$mlink.moblie_getvalidatecode%}');">
+						<div class="mobliecodestr displaynone" id="mobliecodestr">
+							如果2分钟内没有收到校验短信，您可以点击以下按钮重新获取验证码。<br/>
+							<input id="btnSendCode" class="button rosy" type="button" value="重新发送验证码" onclick="sendgetmobliecode('{%$member.moblie%}','{%$member.userid%}','{%$member.username%}','{%$mlink.moblie_getvalidatecode%}')" />
+						</div>
+
+						<button type="submit" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">确定手机绑定</button>
+					</li>
+				</ul>
+			</form>
+		{%elseif $out=='moblievalidate'%}
+			<!--手机修改-->
+			<script type="text/javascript">
+				var seccode_empty = "{%$lngpack.seescodeerr%}";
+				var password_err = "{%$lngpack.password_err%}";
+			</script>
+			<script type="text/javascript" src="{%$rootdir%}js/mobliecode.js"></script>
+			<form name="editmoblie" id="editmoblie" method="post" action="{%$mlink.moblie_validatecode%}" onsubmit="return moblievalidate(2)">
+			<input type="hidden" name="tokenkey" value="{%$tokenkey.token_key%}"/>
+			<input type="hidden" name="userid" value="{%$member.userid%}"/>
+			<input type="hidden" name="username" value="{%$member.username%}"/>
+			<input type="hidden" name="mobile" value="{%$member.mobile%}"/>
+			<input type="hidden" name="inputclass" value="edit"/>
+				<ul class="text_area">
+					<li class="list_divider">手机号码绑定解除与修改</li>
+					<li class="list_info">
+						<label for="password" class="ui-hidden-accessible">密码</label>
+						<input type="password" name="password" id="password" value="" placeholder="密码" vautocomplete="off">
+
+						<label for="email" class="ui-hidden-accessible">验证码</label>
+						<input type="text" name="mobliesn" id="mobliesn"  placeholder="验证码" data-theme="c">
+
+						<input name="getmobliecodebotton" id="getmobliecodebotton" class="button rosy" type="button" value="点击获取" onclick="getmobliecode('{%$member.moblie%}','{%$member.userid%}','{%$member.username%}','{%$mlink.moblie_getvalidatecode%}');">
+						<div class="mobliecodestr displaynone" id="mobliecodestr">
+							如果2分钟内没有收到校验短信，您可以点击以下按钮重新获取验证码。<br/>
+							<input id="btnSendCode" class="button rosy" type="button" value="重新发送验证码" onclick="sendgetmobliecode('{%$member.moblie%}','{%$member.userid%}','{%$member.username%}','{%$mlink.moblie_getvalidatecode%}')" />
+						</div>
+
+						<button type="submit" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">提交新的绑定</button>
+					</li>
+				</ul>
+			</form>
+		{%elseif $out=='orderlist'%}
+			<script id="panel-init">
+				function pageajaxlist() {
+					var limit = $('#limit').val();
+					var nowpage = $('#nowpage').val();
+					var maxpage = $('#maxpage').val();
+					var limitstard = parseInt(nowpage) * limit;
+					nowpage = parseInt(nowpage) + 1;
+					$('#nowpage').val(nowpage);
+					if (nowpage == maxpage){
+						$("#pagearticlelistbotton").hide();
+					}
+					if (nowpage <= maxpage) {
+						$.ajax({
+							type: "GET",
+							url: "{%find:mlink class=1 out=orderlistajax%}",
+							data: "limitstard=" + limitstard + "&nowpage=" + nowpage + "&limit=" + limit,
+							success: function(data) {
+								$("#memberajaxlist").append(data);
+							}
+						});
+					}
+				}
+			</script>
+			{%if count($array) > 0%}
+			<!--每页显示数量-->
+			<input type="hidden" name="limit" id="limit" value="{%$limit%}"/>
+			<!--数据总数量-->
+			<input type="hidden" name="countnum" id="countnum" value="{%$countnum%}"/>
+			<!--总翻页数量-->
+			<input type="hidden" name="maxpage" id="maxpage" value="{%$maxpage%}"/>
+			<!--当前翻页数-->
+			<input type="hidden" name="nowpage" id="nowpage" value="1"/>
+			<ul class="text_area">
+				<li class="list_divider">订单管理</li>
+			</ul>
+			<ul data-role="listview" data-inset="true" data-theme="x" id="memberajaxlist">
+				{%forlist from=$array key=i%}
+				<li><a href="{%$array[i].link%}"><span class="f12">{%$array[i].ordersn%}（{%$array[i].ordertypename%}）</span><span class="ui-li-count">{%$moneytype%}{%$array[i].orderamount%}</span></a></li>
+				{%/forlist%}
+			</ul>
+			{%if $maxpage>1%}
+			<a id="pagearticlelistbotton" data-theme="c" data-role="button" href="javascript:pageajaxlist();">查看更多</a>
+			{%/if%}
+			{%else%}
+			<ul class="text_area">
+				<li class="list_divider">订单管理</li>
+				<li class="list_info tc">暂无数据</li>
+			</ul>
+			{%/if%}
+		{%elseif $out=='orderread'%}
+			<!--订单基本信息-->
+			<script type="text/javascript">
+				var address_title = "{%$lngpack.address_title%}";
+				var alias_empty = "{%$lngpack.alias_empty%}";
+				var email_err = "{%$lngpack.email_err%}";
+				var tel_empty = "{%$lngpack.tel_empty%}";
+			</script>
+
+			<ul data-role="listview" data-inset="true" data-theme="b" style="margin-top:10px;">
+				<li data-role="list-divider" data-theme="b">订单基本信息</li>
+				<li class="f14">订单号：{%$read.ordersn%}</li>
+				<li class="f14">订单时间：{%$read.addtime|timeformat(4)%}</li>
+				<li class="f14">订单状态：{%$read.ordertypename%}</li>
+				<li class="f14">商品总额：{%$moneytype%}{%$read.productmoney%}</li>
+				<li class="f14">商品总额{%$moneytype%}{%$read.productmoney%} - 折扣{%$moneytype%}{%$read.discount%} + 运费{%$moneytype%}{%$read.shippingmoney%} + 支付手续费{%$moneytype%}{%$read.paymoney%} = 订单总额{%$moneytype%}{%$read.orderamount%}</li>
+				{%if $read.paytime>0%}
+				<li class="f14">支付方式：{%$pay.payname%}</li>
+				<li class="f14">支付凭证号：{%$pay.paysn%}</li>
+				<li class="f14">支付时间：{%$pay.paytime|timeformat(4)%}</li>
+				{%/if%}
+			</ul>
+
+			<ul data-role="listview" data-inset="true" data-theme="b" style="padding-top:10px;">
+				{%forlist from=$array key=i%}
+				<li>
+					<img src="{%$array[i].pic|zoom(90,90)%}">
+					<h2>{%$array[i].title%}</h2>
+					<p>
+						编号：{%$array[i].tsn%}
+						单价：{%$moneytype%}{%$array[i].bprice%}
+						<span style="padding-left:10px;">数量：{%$array[i].amount%}</span>
+						<span style="padding-left:10px;"> 小计：{%$moneytype%}{%$array[i].countprice%}</span>
+					</p>
+
+				</li>
+				{%/forlist%}
+			</ul>
+
+			{%if $read.ordertype==1 || $read.ordertype==2%}
+			<form name="ordersaveform" method="post" action="{%$mlink.ordereditsave%}" onsubmit="return ordersave()">
+			<input type="hidden" name="tokenkey" value="{%$tokenkey.token_key%}"/>
+			<input type="hidden" name="oid" value="{%$read.oid%}"/>
+			<input type="hidden" name="email" value="{%$read.email%}"/>
+			<input type="hidden" name="cityone" value="{%$read.country%}"/>
+			<input type="hidden" name="citytwo" value="{%$read.province%}"/>
+			<input type="hidden" name="citythree" value="{%$read.city%}"/>
+			<input type="hidden" name="district" value="{%$read.district%}"/>
+			<input type="hidden" name="sendtime" value="{%$read.sendtime%}"/>
+			<ul data-role="listview" data-inset="true" data-theme="b" style="margin-top:10px;">
+				<li data-role="list-divider" data-theme="b">修改联系方式</li>
+				<li>
+
+					<label for="ti" class="ui-hidden-accessible">收货人姓名：</label>
+					<input type="text" name="alias" value="{%$read.consignee%}" id="alias" placeholder="收货人姓名" data-theme="c">
+
+					<label for="em" class="ui-hidden-accessible">联系电话：</label>
+					<input type="text" name="tel" value="{%$read.tel%}" placeholder="联系电话" data-theme="c">
+
+					<label for="em" class="ui-hidden-accessible">手机：</label>
+					<input type="text" name="mobile" value="{%$read.mobile%}" placeholder="手机" data-theme="c">
+
+					<label for="em" class="ui-hidden-accessible">详细地址：</label>
+					<input type="text" name="address" value="{%$read.address%}" placeholder="详细地址" data-theme="c">
+
+					<label for="em" class="ui-hidden-accessible">邮编：</label>
+					<input type="text" name="zipcode" value="{%$read.zipcode%}" placeholder="邮编" data-theme="c">
+
+					<label for="co" class="ui-hidden-accessible">备注</label>
+					<textarea cols="50" rows="15" name="content" id="content" placeholder="备注" data-theme="c">{%$read.content%}</textarea>
+
+					<button type="submit" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">修改联系方式</button>
+				</li>
+			</ul>
+			</form>
+			{%else%}
+			<ul data-role="listview" data-inset="true" data-theme="b" style="margin-top:10px;">
+				<li data-role="list-divider" data-theme="b">收货信息</li>
+				<li class="f14">收件人：{%$read.consignee%}</li>
+				<li class="f14">电子邮箱：{%$read.email%}</li>
+				<li class="f14">详细地址：{%$read.address%}</li>
+				<li class="f14">联系电话：{%$read.tel%}</li>
+				<li class="f14">手机：{%$read.mobile%}</li>
+				<li class="f14">备注：{%$read.content%}</li>
+			</ul>
+			{%/if%}
+		{%elseif $out=='enquirylist'%}
+			<script id="panel-init">
+				function pageajaxlist() {
+					var limit = $('#limit').val();
+					var nowpage = $('#nowpage').val();
+					var maxpage = $('#maxpage').val();
+					var limitstard = parseInt(nowpage) * limit;
+					nowpage = parseInt(nowpage) + 1;
+					$('#nowpage').val(nowpage);
+					if (nowpage == maxpage){
+						$("#pagearticlelistbotton").hide();
+					}
+					if (nowpage <= maxpage) {
+						$.ajax({
+							type: "GET",
+							url: "{%find:mlink class=1 out=enquirylistajax%}",
+							data: "limitstard=" + limitstard + "&nowpage=" + nowpage + "&limit=" + limit,
+							success: function(data) {
+								$("#memberajaxlist").append(data);
+							}
+						});
+					}
+				}
+			</script>
+
+			{%if count($array) > 0%}
+			<!--每页显示数量-->
+			<input type="hidden" name="limit" id="limit" value="{%$limit%}"/>
+			<!--数据总数量-->
+			<input type="hidden" name="countnum" id="countnum" value="{%$countnum%}"/>
+			<!--总翻页数量-->
+			<input type="hidden" name="maxpage" id="maxpage" value="{%$maxpage%}"/>
+			<!--当前翻页数-->
+			<input type="hidden" name="nowpage" id="nowpage" value="1"/>
+
+			<ul class="text_area">
+				<li class="list_divider">询价管理</li>
+			</ul>
+			<ul data-role="listview" data-inset="true" data-theme="x" id="memberajaxlist">
+				{%forlist from=$array key=i%}
+				<li><a href="{%$array[i].link%}"><span class="f12">询盘编号：{%$array[i].enquirysn%}</span><span class="ui-li-count">{%if $array[i].isclass==0%}新询价{%elseif $array[i].isclass==1%}已回复询价{%elseif $array[i].isclass==2%}已作废{%/if%}</span></a></li>
+				{%/forlist%}
+			</ul>
+			{%if $maxpage>1%}
+			<a id="pagearticlelistbotton" data-theme="c" data-role="button" href="javascript:pageajaxlist();">查看更多</a>
+			{%/if%}
+
+			{%else%}
+			<ul class="text_area">
+				<li class="list_divider">询价管理</li>
+				<li class="list_info tc">暂无数据</li>
+			</ul>
+			{%/if%}
+		{%elseif $out=='enquiryread'%}
+			<script type="text/javascript">
+				var address_title = "{%$lngpack.address_title%}";
+				var alias_empty = "{%$lngpack.alias_empty%}";
+				var email_err = "{%$lngpack.email_err%}";
+				var tel_empty = "{%$lngpack.tel_empty%}";
+			</script>
+
+			<ul data-role="listview" data-inset="true" data-theme="b" style="margin-top:10px;">
+				<li data-role="list-divider" data-theme="b">询价基本信息</li>
+				<li class="f14">询价号：{%$read.enquirysn%}</li>
+				<li class="f14">询价时间：{%$read.addtime|timeformat(4)%}</li>
+				<li class="f14">询价状态：{%if $read.isclass==0%}新询价{%elseif $read.isclass==1%}已回复询价{%elseif $read.isclass==2%}已作废{%/if%}</li>
+			</ul>
+
+			<ul data-role="listview" data-inset="true" data-theme="b" style="padding-top:10px;">
+				{%forlist from=$array key=i%}
+				<li>
+					<img src="{%$array[i].pic|zoom(90,90)%}">
+					<h2>{%$array[i].title%}</h2>
+					<p>
+						编号：{%$array[i].tsn%}
+						<span style="padding-left:10px;">数量：{%$array[i].amount%}</span>
+					</p>
+
+				</li>
+				{%/forlist%}
+			</ul>
+
+			{%if $read.isclass==0%}
+			<form name="mainform" method="post" action="{%$mlink.enquiryeditsave%}" onsubmit="return enquirysave()">
+			<input type="hidden" name="tokenkey" value="{%$tokenkey.token_key%}"/>
+			<input type="hidden" name="eid" value="{%$read.eid%}"/>
+			<input type="hidden" name="email" value="{%$read.email%}"/>
+			<input type="hidden" name="cityone" value="{%$read.country%}"/>
+			<input type="hidden" name="citytwo" value="{%$read.province%}"/>
+			<input type="hidden" name="citythree" value="{%$read.city%}"/>
+			<input type="hidden" name="district" value="{%$read.district%}"/>
+			<input type="hidden" name="sex" value="{%$read.sex%}"/>
+			<ul data-role="listview" data-inset="true" data-theme="b" style="margin-top:10px;">
+				<li data-role="list-divider" data-theme="b">修改联系方式</li>
+				<li>
+
+					<label for="ti" class="ui-hidden-accessible">联系人：</label>
+					<input type="text" name="linkman" value="{%$read.linkman%}" id="linkman" placeholder="联系人" data-theme="c">
+
+					<label for="em" class="ui-hidden-accessible">联系电话：</label>
+					<input type="text" name="tel" value="{%$read.tel%}" placeholder="联系电话" data-theme="c">
+
+					<label for="em" class="ui-hidden-accessible">手机：</label>
+					<input type="text" name="mobile" value="{%$read.mobile%}" placeholder="手机" data-theme="c">
+
+					<label for="em" class="ui-hidden-accessible">传真：</label>
+					<input type="text" name="fax" value="{%$read.fax%}" placeholder="传真" data-theme="c">
+
+					<label for="em" class="ui-hidden-accessible">详细地址：</label>
+					<input type="text" name="address" value="{%$read.address%}" placeholder="详细地址" data-theme="c">
+
+					<label for="em" class="ui-hidden-accessible">邮编：</label>
+					<input type="text" name="zipcode" value="{%$read.zipcode%}" placeholder="邮编" data-theme="c">
+
+					<label for="co" class="ui-hidden-accessible">备注</label>
+					<textarea cols="50" rows="15" name="content" id="content" placeholder="备注" data-theme="c">{%$read.content%}</textarea>
+
+					<button type="submit" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">修改联系方式</button>
+				</li>
+			</ul>
+			</form>
+			{%else%}
+			<ul data-role="listview" data-inset="true" data-theme="b" style="margin-top:10px;">
+				<li data-role="list-divider" data-theme="b">询价人联系信息</li>
+				<li class="f14">联系人：{%$read.linkman%}</li>
+				<li class="f14">电子邮箱：{%$read.email%}</li>
+				<li class="f14">详细地址：{%$read.address%}</li>
+				<li class="f14">联系电话：{%$read.tel%}</li>
+				<li class="f14">传真：{%$read.fax%}</li>
+				<li class="f14">手机：{%$read.mobile%}</li>
+				<li class="f14">备注：{%$read.content%}</li>
+				{%if $read.isclass==1%}
+				<li class="f14">回复结果：{%read.editresult%}</li>
+				<li class="f14">备注：{%$read.edittime|timeformat(4)%}</li>
+				{%/if%}
+			</ul>
+			{%/if%}
+		{%elseif $out=='forumlist'%}
+			<script id="panel-init">
+				function pageajaxlist() {
+					var limit = $('#limit').val();
+					var nowpage = $('#nowpage').val();
+					var maxpage = $('#maxpage').val();
+					var limitstard = parseInt(nowpage) * limit;
+					nowpage = parseInt(nowpage) + 1;
+					$('#nowpage').val(nowpage);
+					if (nowpage == maxpage){
+						$("#pagearticlelistbotton").hide();
+					}
+					if (nowpage <= maxpage) {
+						$.ajax({
+							type: "GET",
+							url: "{%find:mlink class=1 out=forumlistajax%}",
+							data: "limitstard=" + limitstard + "&nowpage=" + nowpage + "&limit=" + limit,
+							success: function(data) {
+								$("#memberajaxlist").append(data);
+							}
+						});
+					}
+				}
+			</script>
+			{%if count($array) > 0%}
+			<!--每页显示数量-->
+			<input type="hidden" name="limit" id="limit" value="{%$limit%}"/>
+			<!--数据总数量-->
+			<input type="hidden" name="countnum" id="countnum" value="{%$countnum%}"/>
+			<!--总翻页数量-->
+			<input type="hidden" name="maxpage" id="maxpage" value="{%$maxpage%}"/>
+			<!--当前翻页数-->
+			<input type="hidden" name="nowpage" id="nowpage" value="1"/>
+			<ul class="text_area">
+				<li class="list_divider">留言管理</li>
+			</ul>
+			<ul data-role="listview" data-inset="true" data-theme="x" id="memberajaxlist">
+				{%forlist from=$array key=i%}
+				<li><a href="{%$array[i].edit%}"><span class="f12">{%$array[i].title|cutstr(35,'')%}</span></a></li>
+				{%/forlist%}
+			</ul>
+			{%if $maxpage>1%}
+			<a id="pagearticlelistbotton" data-theme="c" data-role="button" href="javascript:pageajaxlist();">查看更多</a>
+			{%/if%}
+			{%else%}
+			<ul class="text_area">
+				<li class="list_divider">留言管理</li>
+				<li class="list_info tc">暂无数据</li>
+			</ul>
+			{%/if%}
+		{%elseif $out=='forumedit'%}
+			<script type="text/javascript">
+			var forum_title_err = "{%$lngpack.forum_title_err%}";
+			var forum_input_err = "{%$lngpack.forum_input_err%}";
+			var email_err = "{%$lngpack.email_err%}";
+			var seccode_empty = "{%$lngpack.seescodeerr%}";
+			</script>
+			<!--留言查看-->
+			<form name="bbsmainform" method="post" action="{%$mlink.forumeditsave%}" onSubmit="return forumcreat('0')">
+			<input type="hidden" name="tokenkey" value="{%$tokenkey.token_key%}"/>
+			<input type="hidden" name="userid" value="{%$read.userid%}"/>
+			<input type="hidden" name="bid" value="{%$read.bid%}"/>
+			<input type="hidden" name="btid" value="{%$read.btid%}"/>
+			<input type="hidden" name="lng" value="{%$read.lng%}"/>
+			<input type="hidden" name="qq" value="{%$read.qq%}"/>
+			<input type="hidden" name="msn" value="{%$read.msn%}"/>
+			<input type="hidden" name="address" value="{%$read.address%}"/>
+			<input type="hidden" name="tel" value="{%$read.tel%}"/>
+			<input type="hidden" name="mobile" value="{%$read.mobile%}"/>
+			<ul data-role="listview" data-inset="true" data-theme="b" style="margin-top:10px;">
+				<li data-role="list-divider" data-theme="b">修改留言</li>
+				<li>
+
+					<label for="ti" class="ui-hidden-accessible">主题：</label>
+					<input type="text" name="title" value="{%$read.title%}" id="title" placeholder="主题" data-theme="c">
+
+					<label for="em" class="ui-hidden-accessible">姓名：</label>
+					<input type="text" name="username" value="{%$read.username%}" placeholder="姓名" data-theme="c">
+
+					<label for="em" class="ui-hidden-accessible">E-mail：</label>
+					<input type="text" name="email" value="{%$read.email%}" placeholder="E-mail" data-theme="c">
+
+					<label for="co" class="ui-hidden-accessible">内容</label>
+					<textarea cols="80" rows="25" name="content" id="content" placeholder="备注" data-theme="c">{%$read.content|Html2Text('0')%}</textarea>
+
+					<button type="submit" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">修改留言</button>
+				</li>
+			</ul>
+			</form>
+		{%/if%}
+		{%link file="cn/public/footer_str.html"%}
+
+		{%list name=memmenu%}
+	</article>
+	{%link file="cn/public/footer_page.html"%}
+</div>
+</body>
+</html>

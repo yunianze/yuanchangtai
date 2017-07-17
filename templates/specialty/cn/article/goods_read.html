@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <title>{%$lngpack.sitename%}</title>
+    <meta name="keywords" content="{%$lngpack.keyword%}" />
+    <meta name="description" content="{%$lngpack.description%}" />
+    <link rel="shortcut icon" href="{%$rootpath%}images/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="{%$rootpath%}css/common.css">
+    <link rel="stylesheet" type="text/css" href="{%$rootpath%}css/inside.css">
+    <link rel="stylesheet" type="text/css" href="{%$rootpath%}css/slider-pro.min.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="{%$rootpath%}css/examples.css" media="screen" />
+</head>
+
+<body>
+    <!-- 导航栏 -->
+    {%link file="cn/public/head.html"%}
+    <!-- 导航栏结束 -->
+    <!-- banner -->
+    <div class="inBanner clearfix">
+        {%if $type.typepic!==''%}
+        <img src="{%$rootdir%}{%$type.typepic%}" alt=""> {%/if%}
+    </div>
+    <!-- banner end -->
+    <div class="goods_read min-height">
+        <div class="middle clearfix">
+            <!-- 左侧 -->
+            {%link file="cn/public/left.html"%}
+            <!-- 左侧结束 -->
+            <div class="rightCon mt110">
+            <!-- 切换 -->
+                <div id="example5" class="slider-pro" style="margin:3% 0;">
+                    <div class="sp-slides">
+                        <div class="sp-slide"><img class="sp-image" data-src="{%$read.pic|zoom(618,421,'#fff',1)%}" data-retina="{%$read.pic%}" />
+                            <div class="sp-caption">
+                                <strong>{%$read.title%}</strong>
+                            </div>
+                        </div>
+                        {%forlist from=$photo key=i%}
+                        <div class="sp-slide"><img class="sp-image" data-src="{%$photo[i].picfile|zoom(618,421,'#fff',1)%}" data-retina="{%$photo[i].picfile%}" />
+                            <div class="sp-caption">
+                                <strong>{%$read.title%}</strong>
+                                <div class="adv clearfix">
+                                    {%$read.advan|htmlcode(1)%}
+                                </div>
+                            </div>
+                        </div>
+                        {%/forlist%}
+                    </div>
+                    <div class="sp-thumbnails">
+                        <div class="sp-thumbnail">
+                            <div class="sp-thumbnail-image-container"> <img class="sp-thumbnail-image" src="{%$read.pic|zoom(129,80,'#fff',1)%}" /> </div>
+                        </div>
+                        {%forlist from=$photo key=i%}
+                        <div class="sp-thumbnail">
+                            <div class="sp-thumbnail-image-container"> <img class="sp-thumbnail-image" src="{%$photo[i].picfile|zoom(129,80,'#fff',1)%}" /> </div>
+                        </div>
+                        {%/forlist%}
+                    </div>
+                </div>
+                <!-- 切换结束 -->
+
+                <!-- 详情 -->
+            <div class="goodCon">
+                 <div class="Gt">
+                     <p>产品详情</p>
+                 </div>
+               {%$read.content%}
+            </div>
+                <div class="fh_book">
+                    <ul class="fh_newslist_read unstyled">
+                        {%get name=plist class=did:$read.did%}
+                        <li>{%if $read.ctitle!=''%}上一篇：<a class="infolist2" title="{%$read.title%}" href="{%$read.link%}">{%$read.ctitle%}</a>{%/if%}</li>
+                        {%/get%} {%get name=plist class=did:$read.did,class:1%}
+                        <li>{%if $read.ctitle!=''%}下一篇：<a class="infolist2" title="{%$read.title%}" href="{%$read.link%}">{%$read.ctitle%}</a>{%/if%}</li>
+                        {%/get%}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 右侧结束 -->
+    <!-- 中部结束 -->
+    <!-- footer -->
+    {%link file="cn/public/footer.html"%}
+    <!-- footer end-->
+</body>
+<script src="{%$rootpath%}js/jquery.min.js"></script>
+<script src="{%$rootpath%}js/jquery.sliderPro.min.js"></script>
+<script>
+$(document).ready(function($) {
+    $('#example5').sliderPro({
+        width: 618,
+        height: 421,
+        orientation: 'vertical',
+        loop: true,
+        arrows: true,
+        buttons: false,
+        autoplay: true,
+        autoplayDelay: 5000,
+        thumbnailsPosition: 'right',
+        thumbnailPointer: true,
+        thumbnailWidth: 129,
+        thumbnailHeight: 80,
+        fadeArrows: true,
+    });
+});
+
+</script>
+
+</html>

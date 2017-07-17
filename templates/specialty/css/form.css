@@ -1,0 +1,54 @@
+.formCss{
+    width:650px;
+    float: right;
+    text-align: left;
+    overflow: hidden;
+}
+.formBox{
+    overflow: hidden;
+    margin-bottom:20px;
+}
+.formBox span{
+    font-size: 14px;
+    color: #000000;
+    line-height: 26px;
+    display: inline-block;
+}
+.formCss input[type="text"] {
+    width: 205px;
+    height:4px;
+    outline: 0;
+    border:1px solid #959595;
+    background-color: #f7f7f7;
+    padding: 10px;
+}
+
+.formBox textarea {
+    padding: 10px;
+    height:210px;
+    width:628px;
+    outline: 0;
+    border:1px solid #959595;    
+    background-color: #f7f7f7;
+    resize: none;
+}
+.submit-top p{
+font-size: 12px;
+line-height: 12px;
+color: #cccccc;
+font-family: "Simsun";
+float: right;
+margin-top:15px;
+}
+.formCss input[type="submit"]{
+    float: right;
+    padding: 0 23px;
+    font-size: 16px;
+    line-height:28px;
+    color: #fff;
+    outline: 0;
+    border:1px solid #959595;
+    background-color: #bf2d2f;
+    text-align: center;
+    margin-left: 20px;
+}

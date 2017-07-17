@@ -1,0 +1,20 @@
+<div class="left">
+    {%get name=typelist class=utid:$type.topid,tid:$type.tid%}
+    <div class="lBg"></div>
+    <ul class="treeview">
+        {%forlist from=$array key=i%}
+        <li {%if $array[i].selected==1 %}class="hover" {%/if%} >
+            <a href="{%$array[i].link%}" title="{%$array[i].typename%}" >{%$array[i].typename%} </a> {%if count( $array[i].childArray ) > 0 %}
+            <ul class="subItem clearfix">
+                {%forlist from=$array[i].childArray key=ii%}
+                <li class="treeone">
+                    <a href="{%$array[i].childArray[ii].link%}" {%if $array[i].childArray[ii].selected==1 %}class="hover" {%/if%} title="{%$array[i].childArray[ii].typename%}">{%$array[i].childArray[ii].typename%}</a>
+                </li>
+                {%/forlist%}
+            </ul>
+            {%/if%}
+        </li>
+        {%/forlist%}
+    </ul>
+    {%/get%}
+</div>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <!-- 推广优化组件开始 -->
+    <title>{%$lngpack.sitename%}</title>
+    <meta name="keywords" content="{%$lngpack.keyword%}">
+    <meta name="description" content="{%$lngpack.description%}">
+    <!-- 推广优化组件结束 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="format-detection" content="email=no">
+    <!-- css start -->
+    <link type="text/css" rel="stylesheet" href="{%$rootpath%}style/reset.css">
+    <link type="text/css" rel="stylesheet" href="{%$rootpath%}style/public.css">
+    <link type="text/css" rel="stylesheet" href="{%$rootpath%}style/inside.css">
+    <link rel="stylesheet" href="{%$rootpath%}style/fakeLoader.css">
+    <!-- css end -->
+</head>
+
+<body>
+    <div class="wrap">
+        <div id="wrap">
+            <div id="mask"></div>
+            <!-- head start -->
+            <div id="head">
+                <a class="back" href="javascript:history.go(-1)"></a>
+                <div id="navSwitch">
+                    <span class="s1"></span>
+                    <p></p>
+                    <span class="s3"></span>
+                </div>
+                <h1>{%$type.typename%}</h1>
+            </div>
+            <!-- head end -->
+            <!-- secNav start -->
+            {%link file="cn/public/secNav.html"%}
+            <!-- secNav end -->
+            <div class="content article_list">
+                {%if count($array) > 0%}
+                <!--每页显示数量-->
+                <input type="hidden" name="limit" id="limit" value="{%$limit%}"/>
+                <!--数据总数量-->
+                <input type="hidden" name="countnum" id="countnum" value="{%$countnum%}"/>
+                <!--总翻页数量-->
+                <input type="hidden" name="maxpage" id="maxpage" value="{%$maxpage%}"/>
+                <!--当前翻页数-->
+                <input type="hidden" name="nowpage" id="nowpage" value="1"/>
+                <ul id="articlelist">
+                    {%forlist from=$array key=i%}
+                    <li><a href="{%$array[i].link%}">
+                        <h6 class="te">{%$array[i].title%}</h6>
+                        <p>{%$array[i].summary|cutstr(60,'...')%}</p>
+                        <span>发布时间：{%$array[i].addtime|timeformat(2,'-')%}</span>
+                    </a></li>
+                    {%/forlist%}
+                </ul>
+                {%if $maxpage>1%}
+                <a class="more r" href="javascript:pageajaxlist();">查看更多</a>
+                {%/if%}
+                {%else%}
+                <p class="noContent">资料整理中...</p>
+                {%/if%}
+            </div>
+            <!-- navigation  start-->
+            {%link file="cn/public/nav.html"%}
+            <!-- navigation  end-->
+            <!-- footer start -->
+            {%link file="cn/public/footer.html"%}
+            <!-- footer end -->
+        </div>
+    </div>
+    <script>
+    function pageajaxlist() {
+        var limit = $('#limit').val();
+        var nowpage = $('#nowpage').val();
+        var maxpage = $('#maxpage').val();
+        var limitstard = parseInt(nowpage) * limit;
+        nowpage = parseInt(nowpage) + 1;
+        $('#nowpage').val(nowpage);
+        if (nowpage == maxpage){
+            $(".more").hide();
+        }
+        if (nowpage <= maxpage) {
+            $.ajax({
+                type: "GET",
+                url: "{%find:mlink class=1 out=article%}&tid={%$type.tid%}",
+                data: "limitstard=" + limitstard + "&nowpage=" + nowpage + "&limit=" + limit,
+                success: function(data) {
+                    $("#articlelist").append(data);
+                }
+            });
+        }
+    }
+    </script>
+</body>
+</html>

@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>{%$lngpack.sitename%}</title>
+<meta name="keywords" content="{%$lngpack.keyword%}" />
+<meta name="description" content="{%$lngpack.description%}" />
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no" />
+<link rel="stylesheet" type="text/css" href="{%$rootpath%}css/jquery.mobile.flatui.css" />
+<link rel="stylesheet" type="text/css" href="{%$rootpath%}css/custom.css" />
+<link rel="stylesheet" type="text/css" href="{%$rootpath%}css/espcms.css" />
+<link rel="stylesheet" type="text/css" href="{%$rootpath%}css/espcms_wap_public.css" />
+<script type="text/javascript" src="{%$rootdir%}js/wap/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="{%$rootdir%}js/basicrun.js"></script>
+<script src="{%$rootdir%}js/wap/TouchSlide.1.1.js"></script>
+<script type="text/javascript">
+	$(document).bind("mobileinit", function() {
+		$.mobile.ajaxEnabled = false;
+	});
+</script>
+<script type="text/javascript" src="{%$rootdir%}js/wap/jquery.mobile-1.4.2.min.js"></script>
+<script id="panel-init">
+	$(function() {
+		$("body>[data-role='panel']").panel();
+	});
+	$(document).bind("mobileinit", function() {
+		if (navigator.userAgent.indexOf("Android") != -1) {
+			$.mobile.defaultPageTransition = 'none';
+			$.mobile.defaultDialogTransition = 'none';
+		}
+	});
+	document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+		WeixinJSBridge.call('hideToolbar');
+	});
+</script>
+</head>
+<body>
+<div data-role="page" data-theme="a">
+	<div data-role="header" data-theme="b">
+		<h1>{%$lngpack.sitename%}</h1>
+		<a href="#nav-panel" data-icon="flat-menu" data-theme="b" data-inline="true">菜单</a>
+	</div>
+	<article class="content">
+		{%if $out=='buylist'%}
+		{% if count($array) > 0 %}
+		<form name="mainform" method="post" action="{%$mlink.orderupdae%}">
+			<ul data-role="listview" data-inset="true" data-theme="x" style="padding-top:10px;">
+				{%forlist from=$array key=i%}
+				<li>
+					<a href="#">
+					<img src="{%$array[i].pic|zoom(90,130,'#E3E3E3')%}">
+					<h2>{%$array[i].title%}</h2>
+					<p>
+						单价：{%$moneytype%}{%$array[i].bprice%} <span style="padding-left:10px;"> 小计：{%$moneytype%}{%$array[i].countprice%}</span>
+						<input type="hidden" name="bprice[]" value="{%$array[i].bprice%}"/>
+						<input type="hidden" name="did[]" value="{%$array[i].did%}"/>
+						<input type="hidden" name="countprice[]" id="countprice" value="{%$array[i].countprice%}">
+					</p>
+					<p>
+						<input type="range" name="amount[]" id="amount{%$array[i].did%}" value="{%$array[i].amount%}" min="0" max="100" data-mini="true" data-highlight="true" data-theme="b" data-track-theme="b">
+					</p>
+					</a>
+				</li>
+				{%/forlist%}
+			</ul>
+			<input type="submit" name="Submit" data-role="button" data-theme="e" value="更新购物车"/>
+			<a href="javascript:if (confirm('您确定要清空所选购的商品吗？')) location.href='{%$mlink.clearcart%}';" data-role="button" data-theme="d">清空购物车</a>
+			<a data-theme="b" data-role="button" href="javascript:location.href='{%$mlink.orderpay%}';">下一步（结算）</a>
+		</form>
+		{%else%}
+			<ul class="text_area">
+				<li class="list_divider">系统提示</li>
+				<li class="list_info tc">
+					您还没有选择订购商品
+				</li>
+			</ul>
+
+		{%/if%}
+
+		{%elseif $out=='buyedit'%}
+			<script type="text/javascript">
+
+			var address_title = "{%$lngpack.address_title%}";
+			var zipcode_empty = "{%$lngpack.zipcode_empty%}";
+			var alias_empty = "{%$lngpack.alias_empty%}";
+			var email_err = "{%$lngpack.email_err%}";
+			var tel_empty = "{%$lngpack.tel_empty%}";
+			</script>
+			{% if count($array) > 0 %}
+				<form name="ordersaveform" method="post" action="{%$mlink.ordersave%}" onsubmit="return ordersave()">
+				<input type="hidden" name="userid" value="{%$member.userid%}"/>
+				<input type="hidden" name="productmoney" value="{%$productmoney%}"/>
+				<input type="hidden" name="discount_productmoney" value="{%$discount_productmoney%}"/>
+				<input type="hidden" name="discountmoney" value="{%$discountmoney%}"/>
+				<input type="hidden" name="tokenkey" value="{%$tokenkey.token_key%}"/>
+				<input type="hidden" name="sendtime" value="1"/>
+				<ul data-role="listview" data-inset="true" data-theme="b" style="padding-top:10px;">
+					{%forlist from=$array key=i%}
+					<input type="hidden" name="ptitle[]" value="{%$array[i].title%}">
+					<input type="hidden" name="bprice[]" value="{%$array[i].bprice%}">
+					<input type="hidden" name="oprice[]" value="{%$array[i].oprice%}">
+					<input type="hidden" name="tsn[]" value="{%$array[i].tsn%}">
+					<input type="hidden" name="did[]" value="{%$array[i].did%}">
+					<input type="hidden" name="amount[]" id="orderhow" value="{%$array[i].amount%}">
+					<input type="hidden" name="countprice[]" id="countprice" value="{%$array[i].countprice%}">
+
+					<li>
+						<h2>{%$array[i].title%}</h2>
+						<p>
+							单价：{%$moneytype%}{%$array[i].bprice%}
+							<span style="padding-left:10px;">数量：{%$array[i].amount%}</span>
+							<span style="padding-left:10px;"> 小计：{%$moneytype%}{%$array[i].countprice%}</span>
+						</p>
+
+					</li>
+
+					{%/forlist%}
+					<li>商品总金额：{%$moneytype%}{%$productmoney_f%} - 折扣{%$moneytype%}{%$discountmoney%} = {%$moneytype%}{%$discount_productmoney_f%}</li>
+				</ul>
+
+				<ul data-role="listview" data-inset="true" data-theme="b" style="margin-top:10px;">
+					<li data-role="list-divider" data-theme="b">快递及支付方式</li>
+					<li>
+						{% if count($shipplug) > 0 %}
+							<select name="osid" id="osid" data-native-menu="false" data-theme="c">
+								{%forlist from=$shipplug key=i%}
+								<option value="{%$shipplug[i].osid%}">{%$shipplug[i].title%} {%if $shipplug[i].price>0%}运费：{%$moneytype%}{%$shipplug[i].price%} {%/if%}</option>
+								{%/forlist%}
+							</select>
+						{%/if%}
+
+						{% if count($payplug) > 0 %}
+							<select name="opid" id="opid" data-native-menu="false" data-theme="c">
+								{%forlist from=$payplug key=i%}
+								<option value="{%$payplug[i].opid%}">{%$payplug[i].payname%}</option>
+								{%/forlist%}
+							</select>
+						{%/if%}
+					</li>
+				</ul>
+
+				<ul data-role="listview" data-inset="true" data-theme="b" style="margin-top:10px;">
+					<li data-role="list-divider" data-theme="b">填写联系方式</li>
+					<li>
+
+						<label for="ti" class="ui-hidden-accessible">收货人姓名：</label>
+						<input type="text" name="alias" value="{%$member.alias%}" id="alias" placeholder="收货人姓名" data-theme="c">
+
+						<fieldset data-role="controlgroup" data-theme="c">
+							<input type="radio" name="sex" id="radio-choice-v-2a" value="1"{%if $member.sex==1%} checked="checked"{%/if%}>
+							<label for="radio-choice-v-2a">男</label>
+							<input type="radio" name="sex" id="radio-choice-v-2b" value="0"{%if $member.sex==0%} checked="checked"{%/if%}>
+							<label for="radio-choice-v-2b">女</label>
+						</fieldset>
+
+						<label for="un" class="ui-hidden-accessible">性别：</label>
+						<input type="text" name="email" value="{%$member.email%}"  id="email" placeholder="电子邮件" data-theme="c">
+
+						<label for="em" class="ui-hidden-accessible">联系电话：</label>
+						<input type="text" name="tel" value="{%$member.tel%}" placeholder="联系电话" data-theme="c">
+
+						<label for="em" class="ui-hidden-accessible">手机：</label>
+						<input type="text" name="mobile" value="{%$member.mobile%}" placeholder="手机" data-theme="c">
+
+						<label for="em" class="ui-hidden-accessible">详细地址：</label>
+						<input type="text" name="address" value="{%$member.address%}" placeholder="详细地址" data-theme="c">
+
+						<label for="em" class="ui-hidden-accessible">邮编：</label>
+						<input type="text" name="zipcode" value="{%$member.zipcode%}" placeholder="邮编" data-theme="c">
+
+						<label for="co" class="ui-hidden-accessible">备注</label>
+						<textarea cols="50" rows="15" name="content" id="content" placeholder="备注" data-theme="c"></textarea>
+
+						<button type="submit" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">提交订单</button>
+					</li>
+				</ul>
+				</form>
+			{%else%}
+			<ul class="text_area">
+				<li class="list_divider">系统提示</li>
+				<li class="list_info tc">
+					您还没有选择订购商品
+				</li>
+			</ul>
+			{%/if%}
+		{%elseif $out=='buyok'%}
+			<ul class="text_area">
+				<li class="list_divider">成功提交订单</li>
+				<li class="list_info tc lh20">
+					恭喜，您的订单已提交成功！<br/>请记住您的订单号<span class="oninage b">{%$ordersn%}</span>
+					<br/>
+					您订单总金额为：商品合计{%$moneytype%}{%$discount%} + 邮寄费用{%$moneytype%}{%$shipprice%} + 支付手续费{%$moneytype%}{%$payprice%} = <span class="oninage">{%$moneytype%}{%$orderamount%}
+
+					{%if $order_ismember%}
+					<a data-theme="c" data-role="button" href="{%$mlink.center%}">会员中心</a>
+					{%/if%}
+				</li>
+			</ul>
+		{%/if%}
+
+
+		{%link file="cn/public/footer_str.html"%}
+	</article>
+	{%link file="cn/public/footer_page.html"%}
+</div>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <title>{%$lngpack.sitename%}</title>
+    <meta name="keywords" content="{%$lngpack.keyword%}" />
+    <meta name="description" content="{%$lngpack.description%}" />
+    <link rel="shortcut icon" href="{%$rootpath%}images/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="{%$rootpath%}css/common.css">
+    <link rel="stylesheet" type="text/css" href="{%$rootpath%}css/inside.css">
+    <link rel="stylesheet" href="{%$rootpath%}css/jquery.page.css">
+
+</head>
+
+<body>
+    <!-- 导航栏 -->
+    {%link file="cn/public/head.html"%}
+    <!-- 导航栏结束 -->
+    <!-- banner -->
+    <div class="inBanner clearfix">
+        {%if $type.typepic!==''%}
+        <img src="{%$rootdir%}{%$type.typepic%}" alt=""> {%/if%}
+    </div>
+    <!-- banner end -->
+    <div class="partner min-height ">
+        <div class="middle clearfix">
+            <div class="rightCon" style="width:100%;
+            float:none;">
+            <div class="Pcontent ">
+                {%$type.content|htmlcode(1)%}
+
+                  
+                  </div>
+                     {%if count($array) > 0%}
+                  <ul class="partner_list clearfix">
+                    <div class="page pageCurr clearfix">
+                   {%forlist from=$array key=i%}
+                      <li>
+                          <img src="{%$array[i].pic|zoom(273,128,'#fff',1)%}" alt="">
+                          <p>{%$array[i].title%}</p>
+                      </li>
+                       {%div=>i=9%}</div>
+                    <div class="page clearfix">
+                        {%/div=>i%} {%/forlist%}
+                    </div>
+                  </ul>
+                    <div class="tcdPageCode">
+                </div>
+                {%else%}
+                <div class="fh_botton">
+                    <div id="pagination">暂无内容</div>
+                </div>
+                {%/if%}
+            </div>
+        </div>
+    </div>
+    <!-- 右侧结束 -->
+    <!-- 中部结束 -->
+    <!-- footer -->
+    {%link file="cn/public/footer.html"%}
+    <!-- footer end-->
+</body>
+<script src="{%$rootpath%}js/jquery.min.js"></script>
+<script src="{%$rootpath%}js/jquery.page.js"></script>
+</html>

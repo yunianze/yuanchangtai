@@ -1,0 +1,101 @@
+     /*分页器*/
+     
+     .page {
+         display: none;
+     }
+     
+     .pageCurr {
+         display: block;
+     }
+     
+     .tcdPageCode-add,
+     .tcdPageCode {
+         font-size: 0px;
+         text-align: center;
+         margin-top: 50px;
+         margin-bottom: 40px;
+     }
+     
+     .tcdPageCode-add a,
+     .tcdPageCode a {
+         display: inline-block;
+         font-size: 15px;
+         line-height: 29px;
+         color: #333;
+         width: 28px;
+         height: 28px;
+         background: #fff;
+         border: 1px solid #b7b7b7;
+         -webkit-border-radius: 50%;
+         -moz-border-radius: 50%;
+         -ms-border-radius: 50%;
+         -o-border-radius: 50%;
+         border-radius: 50%;
+         margin-right: 10px;
+         -webkit-transition: all ease-in-out 0.3s;
+         -o-transition: all ease-in-out 0.3s;
+         transition: all ease-in-out 0.3s;
+     }
+     
+     .prevPage {
+         background: url(../images/prev.png) no-repeat center !important;
+         border-color: #fff !important;
+     }
+     
+     .nextPage {
+         background: url(../images/next.png) no-repeat center !important;
+         border-color: #fff !important;
+     }
+     
+     .tcdPageCode-add a:hover,
+     .tcdPageCode a:hover {
+         font-weight: bold;
+         background: #6bb503;
+         color: #4879a6;
+         border-color: #7cb1e4;
+     }
+     
+     .tcdPageCode-add span.current,
+     .tcdPageCode span.current {
+         display: inline-block;
+         font-size: 15px;
+         line-height: 29px;
+         color: #4879a6;
+         width: 28px;
+         height: 28px;
+         cursor: pointer;
+         font-weight: bold;
+         background: #6bb503;
+         border: 1px solid #7cb1e4;
+         -webkit-border-radius: 50%;
+         -moz-border-radius: 50%;
+         -ms-border-radius: 50%;
+         -o-border-radius: 50%;
+         border-radius: 50%;
+         margin-right: 10px;
+         -webkit-transition: all ease-in-out 0.3s;
+         -o-transition: all ease-in-out 0.3s;
+         transition: all ease-in-out 0.3s;
+     }
+     
+     .tcdPageCode-add span.disabled,
+     .tcdPageCode span.disabled {
+        cursor: pointer;
+         display: inline-block;
+         font-size: 15px;
+         line-height: 29px;
+         color: #333;
+         width: 28px;
+         height: 28px;
+         background: #fff;
+         border: 1px solid #b7b7b7;
+         -webkit-border-radius: 50%;
+         -moz-border-radius: 50%;
+         -ms-border-radius: 50%;
+         -o-border-radius: 50%;
+         border-radius: 50%;
+         margin-right: 10px;
+         -webkit-transition: all ease-in-out 0.3s;
+         -o-transition: all ease-in-out 0.3s;
+         transition: all ease-in-out 0.3s;
+     }

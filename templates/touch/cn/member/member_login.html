@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>{%$lngpack.sitename%}</title>
+<meta name="keywords" content="{%$lngpack.keyword%}" />
+<meta name="description" content="{%$lngpack.description%}" />
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no" />
+<link rel="stylesheet" type="text/css" href="{%$rootpath%}css/jquery.mobile.flatui.css" />
+<link rel="stylesheet" type="text/css" href="{%$rootpath%}css/custom.css" />
+<link rel="stylesheet" type="text/css" href="{%$rootpath%}css/espcms.css" />
+<link rel="stylesheet" type="text/css" href="{%$rootpath%}css/espcms_wap_public.css" />
+<script type="text/javascript" src="{%$rootdir%}js/wap/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="{%$rootdir%}js/basicrun.js"></script>
+<script src="{%$rootdir%}js/wap/TouchSlide.1.1.js"></script>
+<script type="text/javascript">
+	$(document).bind("mobileinit", function() {
+		$.mobile.ajaxEnabled = false;
+	});
+</script>
+<script type="text/javascript" src="{%$rootdir%}js/wap/jquery.mobile-1.4.2.min.js"></script>
+<script id="panel-init">
+	$(function() {
+		$("body>[data-role='panel']").panel();
+	});
+	$(document).bind("mobileinit", function() {
+		if (navigator.userAgent.indexOf("Android") != -1) {
+			$.mobile.defaultPageTransition = 'none';
+			$.mobile.defaultDialogTransition = 'none';
+		}
+	});
+	document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+		WeixinJSBridge.call('hideToolbar');
+	});
+</script>
+<script type="text/javascript">
+	var loing_input_err = "{%$lngpack.loing_input_err%}";
+	var seccode_empty = "{%$lngpack.seescodeerr%}";
+</script>
+</head>
+<body>
+<div data-role="page" data-theme="a">
+	<div data-role="header" data-theme="b">
+		<h1>{%$lngpack.sitename%}</h1>
+		<a href="#nav-panel" data-icon="flat-menu" data-theme="b" data-inline="true">菜单</a>
+	</div>
+	<article class="content">
+		<form name="mainform" method="post" action="{%$mlink.logindb%}" onSubmit="return memberlogin('0')">
+		<input type="hidden" name="tokenkey" value="{%$tokenkey.token_key%}"/>
+		<ul class="text_area">
+			<li class="list_divider">会员登陆</li>
+			<li class="list_info">
+
+				<label for="textinput-hide" class="ui-hidden-accessible">用户名</label>
+				<input type="text" name="username" id="username" placeholder="用户名" value="">
+				<label for="password" class="ui-hidden-accessible">密码</label>
+				<input type="password" name="password" id="password" value="" placeholder="密码" vautocomplete="off">
+
+				<button type="submit" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">登陆会员</button>
+				<a data-theme="d" data-role="button" href="{%$mlink.reg%}" data-icon="flat-man">注册用户名</a>
+				<a data-theme="c" data-role="button" href="{%$mlink.lostpasswd%}" data-icon="flat-lock">找回密码</a>
+				
+			</li>
+		</ul>
+		</form>
+
+		{%link file="cn/public/footer_str.html"%}
+	</article>
+	{%link file="cn/public/footer_page.html"%}
+</div>
+</body>
+</html>

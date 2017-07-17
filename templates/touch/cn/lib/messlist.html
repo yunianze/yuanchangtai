@@ -1,0 +1,78 @@
+<script type="text/javascript" src="{%$rootdir%}js/basicrun.js"></script>
+<script type="text/javascript">
+	$().ready(function() {
+		var limit = $('#limit').val();
+		var nowpage = $('#nowpage').val();
+		$("#bbsajaxlist").load('{%$ajaxurl%}index.php?ac=messmain&at=ajaxlist&did={%$did%}', {
+			'limitstard': 0,
+			'nowpage': nowpage,
+			'limit': limit
+		});
+	});
+
+	function pageajaxlist() {
+		var limit = $('#limit').val();
+		var nowpage = $('#nowpage').val();
+		var maxpage = $('#maxpage').val();
+		var limitstard = parseInt(nowpage) * limit;
+		nowpage = parseInt(nowpage) + 1;
+		$('#nowpage').val(nowpage);
+		if (nowpage == maxpage){
+			$("#pagebbslistbotton").hide();
+		}
+		if (nowpage <= maxpage) {
+			$.ajax({
+				type: "GET",
+				url: "{%find:mlink class=1 out=articlebbslitajax%}&did={%$did%}",
+				data: "limitstard=" + limitstard + "&nowpage=" + nowpage + "&limit=" + limit,
+				success: function(data) {
+					$("#bbsajaxlist").append(data);
+				}
+			});
+		}
+	}
+</script>
+
+<!--每页显示数量-->
+<input type="hidden" name="limit" id="limit" value="{%$limit%}"/>
+<!--数据总数量-->
+<input type="hidden" name="countnum" id="countnum" value="{%$countnum%}"/>
+<!--总翻页数量-->
+<input type="hidden" name="maxpage" id="maxpage" value="{%$maxpage%}"/>
+<!--当前翻页数-->
+<input type="hidden" name="nowpage" id="nowpage" value="1"/>
+
+<div class="espcms_bbs_loading displaynone" id="espcms_bbs_loading"><img src="{%$rootpath%}images/lightbox-ico-loading.gif"></div>
+<ul class="espcms_bbs_list_all" id="bbsajaxlist"></ul>
+{%if $maxpage>1%}
+	<a id="pagebbslistbotton" data-theme="c" data-role="button" href="javascript:pageajaxlist();">查看更多留言</a>
+{%/if%}
+
+
+
+<div data-role="popup" id="popupLogin" data-theme="b" class="ui-corner-all">
+<script type="text/javascript">
+	var forum_input_err = "{%$lngpack.forum_input_err%}";
+	var seccode_empty = "{%$lngpack.seescodeerr%}";
+	var email_err = "{%$lngpack.email_err%}";
+</script>
+	<form name="messformsave" method="post" action="{%$messform%}" onSubmit="return messform('0')">
+		<input type="hidden" name="userid" value="{%$member.userid%}"/>
+		<input type="hidden" name="did" value="{%$did%}"/>
+		<input type="hidden" name="lng" value="{%$lng%}"/>
+		<input type="hidden" name="tokenkey" value="{%$tokenkey.token_key%}"/>
+		<div style="padding:10px 20px;" data-theme="c">
+			<h3>留言添加</h3>
+			<label for="un" class="ui-hidden-accessible">姓名：</label>
+			<input type="text" name="name" id="un" value="" placeholder="姓名" data-theme="c">
+
+			<label for="em" class="ui-hidden-accessible">E-mail：</label>
+			<input type="text" name="email" id="em" value="" placeholder="E-mail" data-theme="c">
+
+			<label for="co" class="ui-hidden-accessible">内容：</label>
+			<textarea cols="50" rows="15" name="content" id="co" placeholder="内容" data-theme="c"></textarea>
+
+			<button type="submit" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">提交留言</button>
+		</div>
+	</form>
+</div>

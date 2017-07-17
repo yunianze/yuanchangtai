@@ -1,0 +1,69 @@
+<form name="{%$form.formcode%}" id="{%$form.formcode%}" method="post" action="{%$form.action%}" onSubmit="return {%$form.formcode%}form('{%$form.isseccode%}')">
+    <input type="hidden" name="linkurl" value="add" />
+    <input type="hidden" name="fgid" id="fgid" value="{%$form.fgid%}" />
+    <input type="hidden" name="formcode" id="formcode" value="{%$form.formcode%}" />
+    <input type="hidden" name="did" id="did" value="{%$did%}" />
+    <input type="hidden" name="tokenkey" value="{%$tokenkey.token_key%}" />
+    <div class="formCss clearfix">
+        <div class="formBox">
+            <span>标题</span>
+            <input type="text" name="title" />
+        </div>
+        <div class="formBox" style="float:right;">
+            <span>用户名</span>
+            <input type="text" name="yyname" />
+        </div>
+        <div class="formBox">
+            <span>联系方式</span>
+            <input type="text" name="tel" />
+        </div>
+        <div class="formBox" style="float:right;">
+            <span>邮箱</span>
+            <input type="text" name="email" />
+        </div>
+         <div class="formBox">
+        <span>故障描述</span>
+        <textarea name="ffcontent"></textarea>
+        </div>
+        <input type="submit" value="提交" class="submit" id="{%$form.formcode%}botton">
+    </div>
+</form>
+<!-- <script>
+function messageOnFocus(that) {
+    // that.style.outline = "none";
+    // that.style.border = "none";
+    that.style.boxShadow = "0 0 2px 0 #cccccc inset ";
+    that.style.backgroundColor = "#fff";
+}
+
+function messageOnBlur(that) {
+    // that.style.border = "1px solid #ccc";
+    that.style.boxShadow = "none";
+}
+</script> -->
+<script type="text/javascript" src="{%$rootdir%}js/basicrun.js"></script>
+<script type="text/javascript" src="{%$rootdir%}js/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript">
+    var seccode_empty = "{%$lngpack.seescodeerr%}";
+    function {%$form.formcode%}form(seccodetype) {
+        {%forlist from=$array key=i%}
+            {%if $array[i].isvalidate==1%}
+                {%if $array[i].validatetext!=''%}
+                    if(document.{%$form.formcode%}.{%$array[i].attrname%}.value.match({%$array[i].validatetext%}ig)==null) {
+                {%else%}
+                    if(document.{%$form.formcode%}.{%$array[i].attrname%}.value==''){
+                {%/if%}
+                document.{%$form.formcode%}.{%$array[i].attrname%}.focus();
+                alert('{%$array[i].typename%}输入错误，请返回重新输入');
+                return false;
+            }
+            {%/if%}
+        {%/forlist%}
+
+        if(seccodetype=='1' && document.{%$form.formcode%}.seccode.value.match(/^[A-Z]{4}$/ig)==null) {
+            document.{%$form.formcode%}.seccode.focus();
+            alert(seccode_empty);
+            return false;
+        }
+    }
+</script>

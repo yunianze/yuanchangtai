@@ -1,0 +1,9 @@
+{%forlist from=$array key=i%}
+<li>
+    <a href="{%$array[i].link%}">
+        <h6 class="te">{%$array[i].title%}</h6>
+        <p>{%$array[i].summary|cutstr(60,'...')%}</p>
+        <span>发布时间：{%$array[i].addtime|timeformat(2,'-')%}</span>
+    </a>
+</li>
+{%/forlist%}

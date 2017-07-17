@@ -1,0 +1,99 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>{%$lngpack.sitename%}</title>
+<meta name="keywords" content="{%$lngpack.keyword%}">
+<meta name="description" content="{%$lngpack.description%}">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+<meta name="format-detection" content="email=no">
+
+<link type="text/css" rel="stylesheet" href="{%$rootpath%}style/resetEn.css">
+<link type="text/css" rel="stylesheet" href="{%$rootpath%}style/style.css">
+<link type="text/css" rel="stylesheet" href="{%$rootpath%}style/swiper.min.css">
+<script src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+</head>
+
+<body>
+<div id="wrap">
+	<!--public head start-->
+	{%link file="en/public/head.html"%}
+	<!-- navigation start-->
+	<!-- banner start -->
+	<div class="swiper-container">
+	  	<div class="swiper-wrapper">
+	    	<div class="swiper-slide">
+	      		<img src="{%$rootpath%}images/banner/banner1.jpg" alt="">
+	      	</div>
+	      	<div class="swiper-slide">
+	      		<img src="{%$rootpath%}images/banner/banner2.jpg" alt="">
+	      	</div>
+	      	<div class="swiper-slide">
+	      		<img src="{%$rootpath%}images/banner/banner3.jpg" alt="">
+	      	</div>
+	    </div>
+    	<div class="swiper-pagination"></div>
+  	</div>
+	<!-- banner end -->
+	<!--products start-->
+	<div class="titleIndex">
+		<a href="{%find:type class=37 out=link%}">PRODUCTS</a>
+	</div>
+	<div class="products clearfix">
+		<a class="item" href="{%find:type class=48 out=link%}">
+			<img src="{%$rootpath%}images/p1.jpg">
+			<h1>Titanium</h1>
+		</a>
+		<a class="item" href="{%find:type class=49 out=link%}">
+			<img src="{%$rootpath%}images/p2.jpg">
+			<h1>Titanium-alloy</h1>
+		</a>
+		<a class="item extra" href="{%find:type class=50 out=link%}">
+			<img src="{%$rootpath%}images/p3.jpg">
+			<h1>Titanium-palladium </h1>
+		</a>
+		<a class="item" href="{%find:type class=51 out=link%}">
+			<img src="{%$rootpath%}images/p4.jpg">
+			<h1>Nickel plate</h1>
+		</a>
+		<a class="item" href="{%find:type class=52 out=link%}">
+			<img src="{%$rootpath%}images/p5.jpg">
+			<h1>Package</h1>
+		</a>
+		<a class="item extra" href="{%find:type class=53 out=link%}">
+			<img src="{%$rootpath%}images/p6.jpg">
+			<h1>End products</h1>
+		</a>
+	</div>
+	<!--products end-->
+	<!--about start-->
+	<div class="titleIndex">
+		<a href="{%find:type class=36 out=link%}">ABOUT US</a>
+	</div>
+	<div class="aboutIndex clearfix">
+		<img src="{%$rootpath%}images/aboutIndex.jpg">
+		{%get name=bread class=tid:42%}
+		<p>{%$read.summary|cutstr(130,'…')%}</p>
+		{%/get%}
+	</div>
+	<!--about end-->
+	<!--public footer start-->
+	{%link file="en/public/footer.html"%}
+	<!--public footer end-->
+</div>
+<script src="{%$rootpath%}script/swiper.jquery.min.js"></script>
+<script>
+	var swiper = new Swiper('.swiper-container', {
+		pagination: '.swiper-pagination',
+		paginationClickable: true,
+		spaceBetween: 30,
+		centeredSlides: true,
+		autoplay: 4000,
+		autoplayDisableOnInteraction: false
+	});
+</script>
+</body>
+</html>

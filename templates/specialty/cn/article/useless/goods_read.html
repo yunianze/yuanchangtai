@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <title>{%$lngpack.sitename%}</title>
+    <meta name="keywords" content="{%$lngpack.keyword%}" />
+    <meta name="description" content="{%$lngpack.description%}" />
+    <link rel="shortcut icon" href="{%$rootpath%}images/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="{%$rootpath%}css/common.css">
+    <link rel="stylesheet" type="text/css" href="{%$rootpath%}css/inside.css">
+</head>
+
+<body>
+    <!-- 导航栏 -->
+    {%link file="cn/public/head.html"%}
+    <!-- 导航栏结束 -->
+    <!-- banner -->
+    <div class="innerbanner clearfix">
+        {%if $type.typepic!==''%}
+        <img src="{%$rootdir%}{%$type.typepic%}" alt=""> {%/if%}
+    </div>
+    <!-- banner end -->
+    <!-- 中部 -->
+    <div class="middle clearfix setPadding">
+        <!-- 左侧 -->
+        {%link file="cn/public/left.html"%}
+        <!-- 左侧结束 -->
+        <!-- 右侧 -->
+        <div class="base_read" style="min-height:1500px;">
+        <div class="type_location clearfix">
+                <strong class="type">{%$type.typename%}</strong>
+                <!-- 位置 -->
+                    {%list name=path class=type:type,id:$type.tid%}
+                <!-- 位置结束 -->
+                </div>
+                <div class="content goods_read">
+            {%$read.content%} 
+            </div>
+             <div class="fh_book">
+                        <ul class="fh_newslist_read unstyled">
+                            {%get name=plist class=did:$read.did%}
+                            <li>{%if $read.ctitle!=''%}上一篇：<a class="infolist2" title="{%$read.title%}" href="{%$read.link%}">{%$read.ctitle%}</a>{%/if%}</li>
+                            {%/get%} {%get name=plist class=did:$read.did,class:1%}
+                            <li>{%if $read.ctitle!=''%}下一篇：<a class="infolist2" title="{%$read.title%}" href="{%$read.link%}">{%$read.ctitle%}</a>{%/if%}</li>
+                            {%/get%}
+                        </ul>
+                    </div>
+        </div>
+    </div>
+    <!-- 右侧结束 -->
+    <!-- 中部结束 -->
+    <!-- footer -->
+    {%link file="cn/public/footer.html"%}
+    <!-- footer end-->
+</body>
+
+</html>

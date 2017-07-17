@@ -1,0 +1,182 @@
+@charset "utf-8";
+/*
+*	****************************************
+*	*           index style               
+*	****************************************
+*/
+/*head*/
+#head{
+	height: 60px;
+	background: #fff;
+	position: relative;
+	text-align: center;
+}
+#head .logo{
+	display: inline-block;
+	height: 60px;
+}
+#head .logo img{
+	display: block;
+	height: 60px;
+}
+#head a.lng{
+	display: block;
+	height: 60px;
+	position: absolute;
+	left: 11px;
+	top: 0;
+	overflow: hidden;
+	font-size: 0;
+}
+#head a.lng img{
+	width: 16px;
+	height: 16px;
+	vertical-align: middle;
+	font-size: 16px;
+	font-family: Arial;
+}
+#head a.lng span{
+	display: inline-block;
+	font-size: 16px;
+	color: #fff;
+	vertical-align: middle;
+	padding-left: 5px;
+	line-height: 60px;
+}
+/* banner */
+#banner{
+	width: 100%;
+	margin-bottom: 3.125%;
+}
+#banner img{
+	width: 100%;
+	display: block;
+}
+/* public title */
+.title{
+	height: 46px;
+	padding: 0 3.125%;
+	border-bottom: 1px solid #cccccc;
+	overflow: hidden;
+	line-height: 46px;
+}
+.title strong{
+	font-size: 18px;
+	color: #1c1c1c;
+}
+/*products*/
+.products{
+	margin-bottom: 5%;
+}
+.products ul{
+	padding:0 3.125%;
+}
+.products li{
+	width: 48%;
+	border:1px solid #ccc;
+	margin-top: 3.125%;
+	float: left;
+}
+.products li a{
+	display: block;
+}
+.products li img{
+	width: 100%;
+	display: block;
+}
+.products li p{
+	font-size: 14px;
+	color: #333;
+	text-align: center;
+	line-height: 28px;
+	padding: 0 5px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	background: #DADADA;
+}
+
+/*news*/
+.news{
+	padding-bottom: 5%
+}
+.news ul{
+	padding: 0 3.125%;
+}
+.news li{
+	border-bottom: #ccc 1px dashed;
+	background: url('../images/public/news.png') right 15px no-repeat;
+}
+.news li a{
+	display: block;	
+	padding: 20px 0 10px 0;
+}
+.news li h6{
+	width: 85%;
+	font-size: 18px;
+	line-height: 18px;
+	color: #333;
+}
+.news li p{
+	width: 85%;
+	padding-top: 10px;
+	font-size: 14px;
+	color: #999;
+	line-height: 24px;
+}
+.news li span{
+	width: 85%;
+	display: block;
+	font-size: 12px;
+	color: #ccc;
+	padding-top: 15px;
+}
+.news li a:active h6{
+	color: #fff;
+}
+
+/*about*/
+.about{
+	margin-bottom: 3.125%;
+	padding:1% 0 5% 0;
+}
+.about .box{
+	padding: 3.125% 3.125% 0 3.125%;
+}
+.about img{
+	max-width: 100%;
+	display: block;
+	float: left;
+	padding-bottom: 3.125%;
+}
+.about p{
+	text-indent: 2em;
+	font-size: 14px;
+	line-height: 28px;
+}
+
+
+/*swiper*/
+.swiper-pagination-bullet {
+	width:45px;
+	height:6px;
+	display:inline-block;
+	border:1px solid #fff;
+}
+.swiper-pagination-clickable .swiper-pagination-bullet {
+	cursor:pointer
+}
+.swiper-pagination-bullet-active {
+	background:#fff;
+	border-color: #fff;
+}
+.swiper-container-horizontal>.swiper-pagination {
+	bottom:5%;
+	left:0;
+	width:100%;
+	height: 4px;
+	font-size: 0;
+}
+.swiper-container-horizontal>.swiper-pagination .swiper-pagination-bullet {
+	margin:0 5px
+}
